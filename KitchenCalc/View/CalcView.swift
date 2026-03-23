@@ -15,7 +15,7 @@ struct CalcView: View {
             
             // Блок кода
             
-            HStack {
+            HStack(spacing: 4) {
                 // Тип продукта
                 Picker("", selection: $viewModel.selectedIngredient) {
                     ForEach(viewModel.ingredients, id: \.self) { ingred in
@@ -39,7 +39,7 @@ struct CalcView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.vertical)
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color(.systemGray6))
@@ -69,7 +69,8 @@ struct CalcView: View {
                 .fixedSize()
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.vertical)
+            .padding(.leading, 12)
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color(.systemGray6))
@@ -125,7 +126,7 @@ struct CalcView: View {
                 }
             }
         }
-        .padding()
+        .padding(4)
     }
 }
 
