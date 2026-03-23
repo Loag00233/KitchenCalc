@@ -10,8 +10,8 @@ import Foundation
 struct SolveResult: Identifiable {
     let id: String
     let inValue: Double
-    let inMeasureID: String
-    let ingredientTitleID: String
-    let outMeasureID: String
+    let inMeasureTitle: String
+    let ingredientTitle: String
+    let outMeasureTitle: String
     let value: Double
 }

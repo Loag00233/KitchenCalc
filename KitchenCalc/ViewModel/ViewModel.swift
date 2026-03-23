@@ -14,8 +14,8 @@ class CalcViewModel {
     var inValue: Double?
     var outValue: Double?
     var listOfMeasure: [Measure] = []
-    var inMeasure: Measure = Measure(title: "Choose input measure", koefficient: 0, isWeight: false)
-    var outMeasure: Measure = Measure(title: "Choose output measure", koefficient: 0, isWeight: false)
+    var inMeasure: Measure = Measure(title: "Choose input measure", shortTitle: "", koefficient: 0, isWeight: false)
+    var outMeasure: Measure = Measure(title: "Choose output measure", shortTitle: "", koefficient: 0, isWeight: false)
     var showError: Bool = false
     var solveResults: [SolveResult] = []
     
@@ -88,9 +88,9 @@ class CalcViewModel {
         let solveResult = SolveResult(
             id: UUID().uuidString,
             inValue: inValue,
-            inMeasureTitle: inMeasure.title,
-            ingredientTitle: selectedIngredient.title,
-            outMeasureTitle: outMeasure.title,
+            inMeasureID: inMeasure.id,
+            ingredientTitleID: selectedIngredient.id,
+            outMeasureID: outMeasure.id,
             value: outValue)
         self.solveResults.append(solveResult)
     }
