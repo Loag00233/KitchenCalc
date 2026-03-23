@@ -8,25 +8,24 @@
 import SwiftUI
 
 struct ResultCell: View {
-    
-    let result: SolveResult
+    @State var viewModel: ResultCellViewModel
     var body: some View {
             HStack(spacing: 40) {
-                Text("\(result.ingredientTitle)")
+                Text("Тупа ингредиент пока")
                     .foregroundStyle(.secondary)
                     .bold()
                 
-                Text("\(result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(result.inMeasureTitle)")
+                Text("\(viewModel.result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.inMeasureTitle)")
                 
                 Image(systemName: "arrow.right")
                     .foregroundStyle(.secondary)
                 
-                Text("\(result.value.formatted(.number.precision(.fractionLength(0...2)))) \(result.outMeasureTitle)")
+                Text("\(viewModel.result.value.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.outMeasureTitle)")
                     .bold()
             }
     }
 }
 
-#Preview {
-    ResultCell(result: .init(id: UUID().uuidString, inValue: 12.32, inMeasureTitle: "L", ingredientTitle: "Соль", outMeasureTitle: "KG", value: 12.89 ))
-}
+//#Preview {
+//    ResultCell(result: .init(id: UUID().uuidString, inValue: 12.32, inMeasureTitle: "L", ingredientTitle: "Соль", outMeasureTitle: "KG", value: 12.89 ))
+//}

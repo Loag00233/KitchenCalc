@@ -35,7 +35,7 @@ struct CalcView: View {
                 
                 Picker("", selection: $viewModel.inMeasure) {
                     ForEach(viewModel.listOfMeasure) { measure in
-                        Text(measure.shortTitle).tag(measure)
+                        Text(measure.title).tag(measure)
                     }
                 }
             }
@@ -114,10 +114,9 @@ struct CalcView: View {
                 
             } else {
                 List(viewModel.solveResults) { result in
-                    ResultCell(viewModel: .init(result: result))
+                    ResultCell(result: result)
                 }
                 .listStyle(.plain)
-                 .padding(4)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(lineWidth: 1)
