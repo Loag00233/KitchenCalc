@@ -6,129 +6,141 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalcView: View {
     @State var viewModel = CalcViewModel()
+    @Environment(\.modelContext) private var modelContext
+    @Query var ingredients: [Ingredient]
+    @Query var solveResults: [SolveResult]
     
     var body: some View {
         VStack(spacing: 20) {
             
-            // Блок кода
+            // MARK: Карточка продукта
             
-            HStack(spacing: 4) {
-                // Тип продукта
-                Picker("", selection: $viewModel.selectedIngredient) {
-                    ForEach(viewModel.ingredients, id: \.self) { ingred in
-                        Text(ingred.title).tag(ingred as Ingredient?)
+            Button {
+                // TODO: open ProductSheetView
+            } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: Spacing.extraSmall) {
+                        Text(viewModel.selectedIngredient?.title ?? "Select product")
+                            .font(.productTitle)
+                            .foregroundStyle(Color.textPrimary)
+                        if let density = viewModel.selectedIngredient?.density {
+                            Text("\(Int(density)) kg/m^3")
+                                .font(.productSubtitle)
+                                .foregroundStyle(Color.textSecondary)
+                        }
                     }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(Color.textTertiary)
                 }
+                .padding(Spacing.large)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+            }
                 
+            
+            VStack(spacing: 0) {
                 // Входные значения
-                TextField("Enter the quantity", value: $viewModel.inValue, format: .number)
-                    .keyboardType(.decimalPad)
-                    .padding(8)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                            .fill(.gray.opacity(0.4))
-                    }
-                
-                Picker("", selection: $viewModel.inMeasure) {
-                    ForEach(viewModel.listOfMeasure) { measure in
-                        Text(measure.shortTitle).tag(measure)
-                    }
+                HStack {
+                    TextField("0", value: $viewModel.inValue, format: .number)
+                        .font(.converterValue)
+                        .foregroundStyle(Color.accent)
+                    Spacer()
+                    unitPicker(selection: $viewModel.inMeasure)
                 }
-            }
-            .padding(.vertical)
-            .background {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(.systemGray6))
-            }
-            
-            // Блок результата
-            
-            HStack {
+                .padding(.horizontal, Spacing.large)
+                .padding(.vertical, Spacing.medium)
                 
-                Text("Equals")
-                    .foregroundStyle(.secondary)
-                
-                Spacer()
-                
-                Text((viewModel.outValue ?? 0)
-                    .formatted(.number.precision(.fractionLength(0...2))))
-                .font(.system(size: 32))
-                
-                Spacer()
-                
-                Picker("", selection: $viewModel.outMeasure) {
-                    ForEach(viewModel.listOfMeasure) { measure in
-                        Text(measure.title)
-                            .tag(measure)
-                    }
+                Button {
+                    viewModel.swapMeasures()
+                    
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .font(.swapIcon)
+                        .foregroundStyle(Color.textSecondary)
+                        .padding(Spacing.small)
+                        .background(.ultraThinMaterial, in: Circle())
                 }
-                .fixedSize()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical)
-            .padding(.leading, 12)
-            .background {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(.systemGray6))
-            }
-            
-            // Кнопки
-            
-            HStack(spacing: 16) {
-                Button("Calculate") {
-                    viewModel.solve()
+                
+                // Блок результата
+                
+                HStack {
+                    
+                    Text((viewModel.outValue ?? 0)
+                        .formatted(.number.precision(.fractionLength(0...2))))
+                    .font(.system(size: 32))
+                    
+                    Spacer()
+                    
+                    unitPicker(selection: $viewModel.outMeasure)
                 }
-                .padding(12)
+                .padding(.horizontal, Spacing.large)
+                .padding(.vertical, Spacing.medium)
                 .frame(maxWidth: .infinity)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.blue)
-                }
-                .alert("Fill the quantity", isPresented: $viewModel.showError) {}
-                
-                Button("Save") {
-                    viewModel.remember()
-                }
-                .padding(12)
-                .frame(maxWidth: .infinity)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.green)
-                }
             }
-            .foregroundStyle(.white)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+
             
-            // Сохранённые расчёты
             
-            Text("Saved Calculations")
-                .font(.headline)
-            
-            if viewModel.solveResults.isEmpty {
-                // Placeholder когда список пуст
-                Text("No saved calculations")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+            // Панель истории
+            VStack(alignment: .leading, spacing: Spacing.medium) {
                 
-            } else {
-                List(viewModel.solveResults) { result in
-                    ResultCell(viewModel: .init(result: result))
+                HStack {
+                    Text("HISTORY")
+                        .font(.sectionHeader)
+                        .foregroundStyle(Color.textSecondary)
+                    Spacer()
+                    Button("All") { /* TODO: open HistorySheetView */ }
+                        .font(.bodyRegular)
+                    Image(systemName: "arrow.right")
+                        .font(.chevronMedium)
                 }
-                .listStyle(.plain)
-                 .padding(4)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(lineWidth: 1)
-                        .fill(.gray)
+                .foregroundStyle(Color.accent)
+                
+                ForEach(viewModel.solveResults.suffix(3)) { result in
+                    historyRow(result: result)
+                    Divider()
                 }
+
             }
+            .padding(Spacing.large)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+
+
         }
         .padding(4)
     }
+    
+    private func unitPicker(selection: Binding<Measure>) -> some View {
+        Picker("", selection: selection) {
+            ForEach(viewModel.listOfMeasure) { measure in
+                Text(measure.shortTitle).tag(measure)
+            }
+        }
+        .padding(.horizontal, Spacing.medium)
+        .padding(.vertical, Spacing.small)
+        .background(.ultraThinMaterial, in: Capsule())
+    }
+    
+    private func historyRow(result: SolveResult) -> some View {
+        HStack {
+            Text(result.ingredientTitleID)
+                .foregroundStyle(Color.textSecondary)
+            Image(systemName: "arrow.right")
+                .font(.historyArrow)
+                .foregroundStyle(Color.textTertiary)
+            Text("\(result.inValue.formatted()) \(result.inMeasureID) = \(result.value.formatted()) \(result.outMeasureID)")
+                .foregroundStyle(Color.textPrimary)
+        }
+        .font(.bodyRegular)
+    }
+
 }
+
+
 
 #Preview {
     CalcView()

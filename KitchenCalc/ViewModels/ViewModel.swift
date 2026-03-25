@@ -89,10 +89,14 @@ class CalcViewModel {
             id: UUID().uuidString,
             inValue: inValue,
             inMeasureID: inMeasure.id,
-            ingredientTitleID: selectedIngredient.id,
+            ingredientTitleID: selectedIngredient.id.uuidString,
             outMeasureID: outMeasure.id,
             value: outValue)
         self.solveResults.append(solveResult)
+    }
+    
+    func swapMeasures() {
+        (inMeasure, outMeasure) = (outMeasure, inMeasure)
     }
 }
 
