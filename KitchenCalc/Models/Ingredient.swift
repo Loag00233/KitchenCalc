@@ -5,14 +5,16 @@
 //  Created by Ivan Ivashin on 15.02.2026.
 //
 
+import SwiftData
 import Foundation
 
-struct Ingredient: Identifiable, Hashable{
-    let id: String //= UUID().uuidString
-    let title: String
-    let density: Double
+@Model
+class Ingredient: Hashable {
+    @Attribute(.unique) var id: UUID
+    var title: String
+    var density: Double
     
-    init(id: String = UUID().uuidString, title: String, density: Double) {
+    init(id: UUID = UUID(), title: String, density: Double) {
         self.id = id
         self.title = title
         self.density = density

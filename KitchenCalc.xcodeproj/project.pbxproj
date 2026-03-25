@@ -107,9 +107,9 @@
 		FAA127B52F72D9DC0099CAFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FAA127B32F72D9DC0099CAFB /* ConverterView.swift */,
 				FAA127B12F72D9DC0099CAFB /* CalcView.swift */,
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
-				FAA127B32F72D9DC0099CAFB /* ConverterView.swift */,
 				FAA127B42F72D9DC0099CAFB /* ResultCell.swift */,
 			);
 			path = Views;

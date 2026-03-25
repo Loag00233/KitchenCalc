@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct KitchenCalcApp: App {
@@ -13,5 +14,6 @@ struct KitchenCalcApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [Ingredient.self, SolveResult.self])
     }
 }
