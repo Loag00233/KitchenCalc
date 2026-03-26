@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @Observable
 class CalcViewModel {
@@ -16,7 +17,6 @@ class CalcViewModel {
     var listOfMeasure: [Measure] = []
     var inMeasure: Measure = Measure(title: "Choose input measure", shortTitle: "", koefficient: 0, isWeight: false)
     var outMeasure: Measure = Measure(title: "Choose output measure", shortTitle: "", koefficient: 0, isWeight: false)
-    var showError: Bool = false
     var solveResults: [SolveResult] = []
     
     var showImperial: Bool = UserDefaults.standard.bool(forKey: "showImperial") {
@@ -54,7 +54,7 @@ class CalcViewModel {
     func solve() {
         guard let inValue,
               let selectedIngredient else {
-            self.showError = true
+            self.outValue = nil
             return
         }
         
@@ -62,15 +62,12 @@ class CalcViewModel {
         var result: Double = 0
         
         switch types {
-            
             // величины одного типа
         case (true, true), (false, false):
             result = inValue * inMeasure.koefficient / outMeasure.koefficient
-            
             // величины масса -> объем
         case (true, false):
             result = inValue * inMeasure.koefficient / selectedIngredient.density / outMeasure.koefficient
-            
             // величины объем -> масса
         case (false, true):
             result = inValue * inMeasure.koefficient * selectedIngredient.density / outMeasure.koefficient
@@ -79,19 +76,23 @@ class CalcViewModel {
         self.outValue = result
     }
     
-    func remember() {
-        guard let inValue, let outValue, let selectedIngredient else { return }
-        guard outMeasure.koefficient != 0 else { return }
+    func remember(context: ModelContext) {
+        guard let inValue, let outValue, let selectedIngredient else {
+            print("guard 1 failed — inValue: \(inValue), outValue: \(outValue), ingredient: \(selectedIngredient)")
+            return }
+        guard outMeasure.koefficient != 0 else {
+            print("guard 2 failed — koefficient is 0")
+            return }
         
+        print("saving...")
         let solveResult = SolveResult(
             id: UUID().uuidString,
             inValue: inValue,
-            inMeasure: inMeasure,
-            inMeasureID: inMeasure.id.uuidString,
-            ingredientTitleID: selectedIngredient.id.uuidString,
-            outMeasureID: outMeasure.id.uuidString,
+            inMeasure: inMeasure.shortTitle,
+            ingredient: selectedIngredient.title,
+            outMeasure: outMeasure.shortTitle,
             value: outValue)
-        self.solveResults.append(solveResult)
+        context.insert(solveResult)
     }
     
     func swapMeasures() {

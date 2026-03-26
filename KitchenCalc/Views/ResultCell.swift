@@ -10,22 +10,23 @@ import SwiftUI
 struct ResultCell: View {
     @State var viewModel: ResultCellViewModel
     var body: some View {
-            HStack(spacing: 40) {
-                Text("Тупа ингредиент пока")
-                    .foregroundStyle(.secondary)
-                    .bold()
-                
-                Text("\(viewModel.result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.inMeasureTitle)")
-                
-                Image(systemName: "arrow.right")
-                    .foregroundStyle(.secondary)
-                
-                Text("\(viewModel.result.value.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.outMeasureTitle)")
-                    .bold()
-            }
+        HStack(spacing: Spacing.medium) {
+            Text(viewModel.ingredientTitle)
+                .foregroundStyle(Color.textSecondary)
+                .bold()
+            
+            Spacer()
+            
+            Text("\(viewModel.result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.inMeasureTitle)")
+                .lineLimit(1)
+            
+            Image(systemName: "arrow.right")
+                .foregroundStyle(Color.textSecondary)
+            
+            Text("\(viewModel.result.value.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.outMeasureTitle)")
+                .bold()
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-//#Preview {
-//    ResultCell(result: .init(id: UUID().uuidString, inValue: 12.32, inMeasureTitle: "L", ingredientTitle: "Соль", outMeasureTitle: "KG", value: 12.89 ))
-//}
