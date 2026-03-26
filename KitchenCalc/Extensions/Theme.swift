@@ -34,15 +34,10 @@ extension Color {
 // MARK: - Typography
 extension Font {
     static let productTitle = Font.system(size: 17, weight: .semibold)
-    static let productSubtitle = Font.system(size: 14)
     static let converterValue = Font.system(size: 40, weight: .light)
-    static let unitLabel = Font.system(size: 15, weight: .medium)
     static let sectionHeader = Font.system(size: 13, weight: .semibold)
     static let bodyRegular = Font.system(size: 15)
-    static let historyArrow = Font.system(size: 11)
-    static let swapIcon = Font.system(size: 16, weight: .medium)
-    static let chevronSmall = Font.system(size: 10, weight: .semibold)
-    static let chevronMedium = Font.system(size: 13)
+    static let arrowRight = Font.system(size: 13)
 }
 
 // MARK: - Spacing

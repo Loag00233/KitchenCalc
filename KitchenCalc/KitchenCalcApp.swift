@@ -14,6 +14,6 @@ struct KitchenCalcApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Ingredient.self, SolveResult.self])
+        .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self])
     }
 }

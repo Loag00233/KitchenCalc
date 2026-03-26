@@ -17,9 +17,9 @@
 		FAA127BA2F72D9DC0099CAFB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */; };
 		FAA127BB2F72D9DC0099CAFB /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B42F72D9DC0099CAFB /* ResultCell.swift */; };
 		FAA127BC2F72D9DC0099CAFB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B22F72D9DC0099CAFB /* ContentView.swift */; };
-		FAA127BD2F72D9DC0099CAFB /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B32F72D9DC0099CAFB /* ConverterView.swift */; };
 		FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AA2F72D9DC0099CAFB /* Ingredient.swift */; };
 		FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */; };
+		FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +34,9 @@
 		FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FAA127B12F72D9DC0099CAFB /* CalcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcView.swift; sourceTree = "<group>"; };
 		FAA127B22F72D9DC0099CAFB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		FAA127B32F72D9DC0099CAFB /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 		FAA127B42F72D9DC0099CAFB /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +109,8 @@
 		FAA127B52F72D9DC0099CAFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FAA127B32F72D9DC0099CAFB /* ConverterView.swift */,
 				FAA127B12F72D9DC0099CAFB /* CalcView.swift */,
+				FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */,
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
 				FAA127B42F72D9DC0099CAFB /* ResultCell.swift */,
 				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
@@ -196,9 +196,9 @@
 				FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */,
 				FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */,
 				FAA127BA2F72D9DC0099CAFB /* ViewModel.swift in Sources */,
+				FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */,
 				FAA127BB2F72D9DC0099CAFB /* ResultCell.swift in Sources */,
 				FAA127BC2F72D9DC0099CAFB /* ContentView.swift in Sources */,
-				FAA127BD2F72D9DC0099CAFB /* ConverterView.swift in Sources */,
 				FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */,
 				FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */,
 				FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */,
@@ -334,6 +334,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BJSCG5463N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -366,6 +367,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BJSCG5463N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
