@@ -19,9 +19,16 @@ class CalcViewModel {
     var showError: Bool = false
     var solveResults: [SolveResult] = []
     
+    var showImperial: Bool = UserDefaults.standard.bool(forKey: "showImperial") {
+        didSet {
+            UserDefaults.standard.set(showImperial, forKey: "showImperial")
+            updateMeasures()
+        }
+    }
+    
     init() {
         getIngredients()
-        getMeasures()
+        updateMeasures()
     }
     
     func getIngredients() {
@@ -31,11 +38,16 @@ class CalcViewModel {
         }
     }
     
-    func getMeasures() {
-        self.listOfMeasure = Measure.mockData
-        if !self.listOfMeasure.isEmpty {
-            inMeasure = listOfMeasure[0]
-            outMeasure = listOfMeasure[0]
+    func updateMeasures() {
+        self.listOfMeasure = filteredMeasures()
+        guard !listOfMeasure.isEmpty else { return }
+        
+        if showImperial == true { // если тогл в настройках вкл
+            inMeasure = listOfMeasure.first { $0.isWeight && $0.isImperial } ?? listOfMeasure[0] // дефолтное входное знач = первое из списка имперских весов (oz)
+            outMeasure = listOfMeasure.first { !$0.isWeight && $0.isImperial } ?? listOfMeasure[0] // дефолтное выходное знач = первое из списка имперских объемов (fl oz)
+        } else {
+            inMeasure = listOfMeasure.first { $0.isWeight } ?? listOfMeasure[0]
+            outMeasure = listOfMeasure.first { !$0.isWeight } ?? listOfMeasure[0]
         }
     }
     
@@ -45,19 +57,6 @@ class CalcViewModel {
             self.showError = true
             return
         }
-        
-        // добавить guard inMeasure.koeff / ouMeasure.koef не равен 0
-        
-        /// Варианты решения
-        ///
-        /// 1) если одинаковые величины одного типа (масса-масса, объем - объем)
-        /// outValue = inValue * inKoef / outKoef
-        ///
-        /// 2) масса - объем
-        /// перевести 2кг муки в литры
-        /// 2кг / плотность муки
-        ///
-        /// 3) объем - масса
         
         let types = (inMeasure.isWeight, outMeasure.isWeight)
         var result: Double = 0
@@ -77,7 +76,6 @@ class CalcViewModel {
             result = inValue * inMeasure.koefficient * selectedIngredient.density / outMeasure.koefficient
             
         }
-        
         self.outValue = result
     }
     
@@ -88,9 +86,10 @@ class CalcViewModel {
         let solveResult = SolveResult(
             id: UUID().uuidString,
             inValue: inValue,
-            inMeasureID: inMeasure.id,
+            inMeasure: inMeasure,
+            inMeasureID: inMeasure.id.uuidString,
             ingredientTitleID: selectedIngredient.id.uuidString,
-            outMeasureID: outMeasure.id,
+            outMeasureID: outMeasure.id.uuidString,
             value: outValue)
         self.solveResults.append(solveResult)
     }
@@ -98,5 +97,11 @@ class CalcViewModel {
     func swapMeasures() {
         (inMeasure, outMeasure) = (outMeasure, inMeasure)
     }
+    
+    private func filteredMeasures() -> [Measure] {
+        let measures = Measure.mockDataMeasure.filter { showImperial || !$0.isImperial }
+        return measures
+    }
+    
 }
 
