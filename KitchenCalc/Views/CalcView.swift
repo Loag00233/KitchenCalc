@@ -40,13 +40,19 @@ struct CalcView: View {
                                 .foregroundStyle(Color.textTertiary)
                         }
                         .padding(Spacing.large)
+                        .frame(maxWidth: .infinity)
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
-                        .padding(.horizontal, Spacing.medium)
-                        
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Radius.card)
+                                .stroke(Color.accent.opacity(0.4), lineWidth: 1)
+                        )
+                        .contentShape(RoundedRectangle(cornerRadius: Radius.card))
                     }
+                    .padding(.horizontal, Spacing.medium)
+                    
                     .sheet(isPresented: $showProductSheet) {
-                          ProductSheetView(selectedIngredient: $viewModel.selectedIngredient)
-                      }
+                        ProductSheetView(selectedIngredient: $viewModel.selectedIngredient)
+                    }
                     
                     
                     VStack(spacing: 0) {
@@ -97,23 +103,18 @@ struct CalcView: View {
                         viewModel.remember(context: modelContext)
                     } label: {
                         Text("Save result")
-                            .font(.bodyRegular)
-                            .foregroundStyle(Color.accent)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, Spacing.medium)
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
-                            .padding(.horizontal, Spacing.medium)
+                            .modifier(ButtonMod(color: .accent))
                     }
-                    
+                    .padding(.horizontal, Spacing.medium)
                 }
                 .padding(.bottom, Spacing.large)
                 
                 if solveResults.isEmpty {
-                      ContentUnavailableView(
-                          "No results yet",
-                          systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
-                          description: Text("Save a calculation to see it here")
-                      )
+                    ContentUnavailableView(
+                        "No results yet",
+                        systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                        description: Text("Save a calculation to see it here")
+                    )
                 } else {
                     List(solveResults) { result in
                         ResultCell(result: result)
@@ -122,6 +123,7 @@ struct CalcView: View {
                                     modelContext.delete(result)
                                 }
                             }
+                            .listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)
                 }
@@ -129,9 +131,7 @@ struct CalcView: View {
             }
             .navigationTitle("Converter")
             .background { Color.appBackground.ignoresSafeArea() }
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
+            .hideKeyboardOnTap()
             .onAppear {
                 if viewModel.selectedIngredient == nil {
                     viewModel.selectedIngredient = ingredients.first
@@ -150,7 +150,7 @@ struct CalcView: View {
             
         }
     }
-        
+
     
     private func unitPicker(selection: Binding<Measure>) -> some View {
         Picker("", selection: selection) {

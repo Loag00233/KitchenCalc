@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: - Colors
 extension Color {
     
     // Текст
@@ -31,7 +30,6 @@ extension Color {
     )
 }
 
-// MARK: - Typography
 extension Font {
     static let productTitle = Font.system(size: 17, weight: .semibold)
     static let converterValue = Font.system(size: 40, weight: .light)
@@ -40,7 +38,14 @@ extension Font {
     static let arrowRight = Font.system(size: 13)
 }
 
-// MARK: - Spacing
+extension View {
+      func hideKeyboardOnTap() -> some View {
+          onTapGesture {
+              UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+          }
+      }
+  }
+
 enum Spacing {
     static let extraSmall: CGFloat = 4
     static let small: CGFloat = 8
@@ -49,7 +54,43 @@ enum Spacing {
     static let extraLarge: CGFloat = 24
 }
 
-// MARK: - Radius
 enum Radius {
     static let card: CGFloat = 20
+}
+
+struct TextFieldMod: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(Spacing.large)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+    }
+}
+
+struct ButtonMod: ViewModifier {
+    var color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .font(Font.bodyRegular)
+            .foregroundStyle(color)
+            .padding(.vertical, Spacing.large)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+            .contentShape(RoundedRectangle(cornerRadius: Radius.card))
+            .overlay(
+                RoundedRectangle(cornerRadius: Radius.card)
+                    .stroke(color.opacity(0.4), lineWidth: 1)
+            )
+    }
+}
+
+struct KeyboardOk: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .submitLabel(.done)
+            .onSubmit {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+    }
 }
