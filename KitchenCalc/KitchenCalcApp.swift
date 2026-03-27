@@ -14,6 +14,12 @@ struct KitchenCalcApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self])
+        .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self]) { result in
+            guard let container = try? result.get() else { return }
+            let context = container.mainContext
+            let existing = try? context.fetch(FetchDescriptor<Ingredient>())
+            guard existing?.isEmpty == true else { return }  // уже засеяно — пропускаем
+            Ingredient.mockData.forEach { context.insert($0) }
+        }
     }
 }

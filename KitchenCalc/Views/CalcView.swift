@@ -14,11 +14,11 @@ struct CalcView: View {
     @Environment(\.modelContext) private var modelContext
     @AppStorage("showImperial") private var showImperial = false
     @Query var ingredients: [Ingredient]
-    @Query var solveResults: [SolveResult]
+    @Query(sort: \SolveResult.date, order: .reverse) var solveResults: [SolveResult]
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack(spacing: 0) {
                 VStack(spacing: Spacing.large) {
                     
                     Button {
@@ -95,7 +95,6 @@ struct CalcView: View {
                     
                     Button {
                         viewModel.remember(context: modelContext)
-                        
                     } label: {
                         Text("Save result")
                             .font(.bodyRegular)
@@ -107,34 +106,51 @@ struct CalcView: View {
                     }
                     
                 }
-                .padding(4)
+                .padding(.bottom, Spacing.large)
                 
-                List(solveResults.reversed()) { result in
-                    ResultCell(viewModel: ResultCellViewModel(result: result))
-                        .swipeActions {
-                            Button("Delete", role: .destructive) {
-                                modelContext.delete(result)
+                if solveResults.isEmpty {
+                      ContentUnavailableView(
+                          "No results yet",
+                          systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                          description: Text("Save a calculation to see it here")
+                      )
+                } else {
+                    List(solveResults) { result in
+                        ResultCell(result: result)
+                            .swipeActions {
+                                Button("Delete", role: .destructive) {
+                                    modelContext.delete(result)
+                                }
                             }
-                        }
+                    }
+                    .scrollContentBackground(.hidden)
                 }
-                .frame(height: 300)
-                .scrollContentBackground(.hidden)
                 
             }
             .navigationTitle("Converter")
-            .scrollContentBackground(.hidden)
             .background { Color.appBackground.ignoresSafeArea() }
             .onTapGesture {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+            .onAppear {
+                if viewModel.selectedIngredient == nil {
+                    viewModel.selectedIngredient = ingredients.first
+                }
             }
             .onChange(of: viewModel.inValue) { viewModel.solve() }
             .onChange(of: viewModel.inMeasure) { viewModel.solve() }
             .onChange(of: viewModel.outMeasure) { viewModel.solve() }
             .onChange(of: viewModel.selectedIngredient) { viewModel.solve() }
-            .onChange(of: showImperial) { viewModel.showImperial = showImperial }
+            .onChange(of: showImperial) { viewModel.updateMeasures(showImperial: showImperial) }
+            .onChange(of: ingredients, {
+                if viewModel.selectedIngredient == nil {
+                    viewModel.selectedIngredient = ingredients.first
+                }
+            })
             
         }
     }
+        
     
     private func unitPicker(selection: Binding<Measure>) -> some View {
         Picker("", selection: selection) {
@@ -152,5 +168,6 @@ struct CalcView: View {
 
 #Preview {
     CalcView()
+        .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self], inMemory: true)
 }
 

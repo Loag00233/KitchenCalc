@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ResultCell: View {
-    @State var viewModel: ResultCellViewModel
+    @State var result: SolveResult
     var body: some View {
         HStack(spacing: Spacing.medium) {
-            Text(viewModel.ingredientTitle)
+            Text(result.ingredient)
                 .foregroundStyle(Color.textSecondary)
                 .bold()
             
             Spacer()
             
-            Text("\(viewModel.result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.inMeasureTitle)")
+            Text("\(result.inValue.formatted(.number.precision(.fractionLength(0...2)))) \(result.inMeasure)")
                 .lineLimit(1)
             
             Image(systemName: "arrow.right")
                 .foregroundStyle(Color.textSecondary)
             
-            Text("\(viewModel.result.value.formatted(.number.precision(.fractionLength(0...2)))) \(viewModel.outMeasureTitle)")
+            Text("\(result.value.formatted(.number.precision(.fractionLength(0...2)))) \(result.outMeasure)")
                 .bold()
                 .lineLimit(1)
         }
