@@ -17,7 +17,7 @@ class CalcViewModel {
     var inMeasure: Measure = Measure(title: "Choose input measure", shortTitle: "", koefficient: 0, isWeight: false)
     var outMeasure: Measure = Measure(title: "Choose output measure", shortTitle: "", koefficient: 0, isWeight: false)
     var solveResults: [SolveResult] = []
-        
+    
     init() {
         updateMeasures(showImperial: UserDefaults.standard.bool(forKey: "showImperial"))
     }
@@ -63,7 +63,7 @@ class CalcViewModel {
     func remember(context: ModelContext) {
         guard let inValue, let outValue, let selectedIngredient else { return }
         guard inValue > 0, outValue > 0 else { return }
-
+        
         
         let solveResult = SolveResult(
             id: UUID(),
@@ -82,6 +82,13 @@ class CalcViewModel {
     private func filteredMeasures(showImperial: Bool) -> [Measure] {
         let measures = Measure.mockDataMeasure.filter { showImperial || !$0.isImperial }
         return measures
+    }
+    
+    func saveIngredient(title: String, density: Double, context: ModelContext) {
+        guard !title.isEmpty else { return }
+        guard density > 0 else { return }
+        let ingredient = Ingredient(title: title, density: density)
+        context.insert(ingredient)
     }
     
 }

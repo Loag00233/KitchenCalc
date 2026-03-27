@@ -17,8 +17,8 @@ struct KitchenCalcApp: App {
         .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self]) { result in
             guard let container = try? result.get() else { return }
             let context = container.mainContext
-            let existing = try? context.fetch(FetchDescriptor<Ingredient>())
-            guard existing?.isEmpty == true else { return }  // уже засеяно — пропускаем
+            guard let existing = try? context.fetch(FetchDescriptor<Ingredient>()),
+                existing.isEmpty else { return }
             Ingredient.mockData.forEach { context.insert($0) }
         }
     }

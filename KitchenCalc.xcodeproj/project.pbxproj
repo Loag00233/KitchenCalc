@@ -19,6 +19,7 @@
 		FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AA2F72D9DC0099CAFB /* Ingredient.swift */; };
 		FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */; };
 		FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */; };
+		FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		FAA127B42F72D9DC0099CAFB /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSheetView.swift; sourceTree = "<group>"; };
+		FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
 				FAA127B42F72D9DC0099CAFB /* ResultCell.swift */,
 				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
+				FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */,
 				FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */,
 				FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */,
+				FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
