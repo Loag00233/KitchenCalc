@@ -10,19 +10,21 @@ import SwiftData
 
 @Model
 class SolveResult: Identifiable {
-    var id: String
+    var id: UUID
     var inValue: Double
     var inMeasure: String
     var ingredient: String
     var outMeasure: String
     var value: Double
+    var date: Date
     
-    init(id: String, inValue: Double, inMeasure: String, ingredient: String, outMeasure: String, value: Double) {
+    init(id: UUID, inValue: Double, inMeasure: String, ingredient: String, outMeasure: String, value: Double, date: Date = Date()) {
         self.id = id
         self.inValue = inValue
         self.inMeasure = inMeasure
         self.ingredient = ingredient
         self.outMeasure = outMeasure
         self.value = value
+        self.date = date
     }
 }

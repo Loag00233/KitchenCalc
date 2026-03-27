@@ -10,7 +10,6 @@ import SwiftData
 
 @Observable
 class CalcViewModel {
-    var ingredients: [Ingredient] = []
     var selectedIngredient: Ingredient?
     var inValue: Double?
     var outValue: Double?
@@ -18,28 +17,13 @@ class CalcViewModel {
     var inMeasure: Measure = Measure(title: "Choose input measure", shortTitle: "", koefficient: 0, isWeight: false)
     var outMeasure: Measure = Measure(title: "Choose output measure", shortTitle: "", koefficient: 0, isWeight: false)
     var solveResults: [SolveResult] = []
-    
-    var showImperial: Bool = UserDefaults.standard.bool(forKey: "showImperial") {
-        didSet {
-            UserDefaults.standard.set(showImperial, forKey: "showImperial")
-            updateMeasures()
-        }
-    }
-    
+        
     init() {
-        getIngredients()
-        updateMeasures()
+        updateMeasures(showImperial: UserDefaults.standard.bool(forKey: "showImperial"))
     }
     
-    func getIngredients() {
-        self.ingredients = Ingredient.mockData
-        if !self.ingredients.isEmpty {
-            selectedIngredient = ingredients[0]
-        }
-    }
-    
-    func updateMeasures() {
-        self.listOfMeasure = filteredMeasures()
+    func updateMeasures(showImperial: Bool) {
+        self.listOfMeasure = filteredMeasures(showImperial: showImperial)
         guard !listOfMeasure.isEmpty else { return }
         
         if showImperial == true { // если тогл в настройках вкл
@@ -77,16 +61,12 @@ class CalcViewModel {
     }
     
     func remember(context: ModelContext) {
-        guard let inValue, let outValue, let selectedIngredient else {
-            print("guard 1 failed — inValue: \(inValue), outValue: \(outValue), ingredient: \(selectedIngredient)")
-            return }
-        guard outMeasure.koefficient != 0 else {
-            print("guard 2 failed — koefficient is 0")
-            return }
+        guard let inValue, let outValue, let selectedIngredient else { return }
+        guard inValue > 0, outValue > 0 else { return }
+
         
-        print("saving...")
         let solveResult = SolveResult(
-            id: UUID().uuidString,
+            id: UUID(),
             inValue: inValue,
             inMeasure: inMeasure.shortTitle,
             ingredient: selectedIngredient.title,
@@ -99,7 +79,7 @@ class CalcViewModel {
         (inMeasure, outMeasure) = (outMeasure, inMeasure)
     }
     
-    private func filteredMeasures() -> [Measure] {
+    private func filteredMeasures(showImperial: Bool) -> [Measure] {
         let measures = Measure.mockDataMeasure.filter { showImperial || !$0.isImperial }
         return measures
     }

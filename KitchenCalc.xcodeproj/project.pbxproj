@@ -10,7 +10,6 @@
 		FA5F04A42F4198BC008C216A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA5F04A02F4198BC008C216A /* Assets.xcassets */; };
 		FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F04A22F4198BC008C216A /* KitchenCalcApp.swift */; };
 		FAA127A92F726C2F0099CAFB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127A82F726C2B0099CAFB /* Theme.swift */; };
-		FAA127B62F72D9DC0099CAFB /* ResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AE2F72D9DC0099CAFB /* ResultCellViewModel.swift */; };
 		FAA127B72F72D9DC0099CAFB /* CalcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B12F72D9DC0099CAFB /* CalcView.swift */; };
 		FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AB2F72D9DC0099CAFB /* Measure.swift */; };
 		FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AC2F72D9DC0099CAFB /* SolveResult.swift */; };
@@ -30,7 +29,6 @@
 		FAA127AA2F72D9DC0099CAFB /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		FAA127AB2F72D9DC0099CAFB /* Measure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
 		FAA127AC2F72D9DC0099CAFB /* SolveResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolveResult.swift; sourceTree = "<group>"; };
-		FAA127AE2F72D9DC0099CAFB /* ResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCellViewModel.swift; sourceTree = "<group>"; };
 		FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FAA127B12F72D9DC0099CAFB /* CalcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcView.swift; sourceTree = "<group>"; };
 		FAA127B22F72D9DC0099CAFB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 		FAA127B02F72D9DC0099CAFB /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				FAA127AE2F72D9DC0099CAFB /* ResultCellViewModel.swift */,
 				FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */,
 			);
 			path = ViewModels;
@@ -191,7 +188,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAA127A92F726C2F0099CAFB /* Theme.swift in Sources */,
-				FAA127B62F72D9DC0099CAFB /* ResultCellViewModel.swift in Sources */,
 				FAA127B72F72D9DC0099CAFB /* CalcView.swift in Sources */,
 				FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */,
 				FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */,

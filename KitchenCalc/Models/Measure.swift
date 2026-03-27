@@ -48,13 +48,4 @@ class Measure: Hashable {
         Measure(title: "Tea spoon (5 ml)", shortTitle: "tsp", koefficient: 0.000005, isWeight: false),
         
     ]
-    
-    
-    static func searchByID(_ id: String) -> Measure? {
-        guard let uuid = UUID(uuidString: id) else { return nil }
-        return mockDataMeasure.first { $0.id == uuid }
-    }
-    
-    
-    
 }
