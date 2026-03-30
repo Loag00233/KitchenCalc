@@ -20,6 +20,9 @@
 		FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */; };
 		FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */; };
 		FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */; };
+		FAAB5CBD2F77944F00FDB325 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */; };
+		FAAB5D5E2F798A5100FDB325 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5D2F798A5100FDB325 /* Badge.swift */; };
+		FAAB5D602F7B0F9C00FDB325 /* CustomMeasuresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasuresView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +40,9 @@
 		FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSheetView.swift; sourceTree = "<group>"; };
 		FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientView.swift; sourceTree = "<group>"; };
+		FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		FAAB5D5D2F798A5100FDB325 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasuresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMeasuresView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				FA5F04A22F4198BC008C216A /* KitchenCalcApp.swift */,
+				FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */,
 				FAA127A72F726C140099CAFB /* Extensions */,
 				FAA127AD2F72D9DC0099CAFB /* Models */,
 				FAA127B02F72D9DC0099CAFB /* ViewModels */,
@@ -83,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				FAA127A82F726C2B0099CAFB /* Theme.swift */,
+				FAAB5D5D2F798A5100FDB325 /* Badge.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -110,6 +118,7 @@
 			children = (
 				FAA127B12F72D9DC0099CAFB /* CalcView.swift */,
 				FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */,
+				FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasuresView.swift */,
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
 				FAA127B42F72D9DC0099CAFB /* ResultCell.swift */,
 				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
@@ -161,6 +170,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = FA5F04832F4044E6008C216A;
 			minimizedProjectReferenceProxies = 1;
@@ -179,6 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAAB5CBD2F77944F00FDB325 /* Localizable.xcstrings in Resources */,
 				FA5F04A42F4198BC008C216A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,9 +209,11 @@
 				FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */,
 				FAA127BB2F72D9DC0099CAFB /* ResultCell.swift in Sources */,
 				FAA127BC2F72D9DC0099CAFB /* ContentView.swift in Sources */,
+				FAAB5D602F7B0F9C00FDB325 /* CustomMeasuresView.swift in Sources */,
 				FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */,
 				FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */,
 				FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */,
+				FAAB5D5E2F798A5100FDB325 /* Badge.swift in Sources */,
 				FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +280,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -323,6 +337,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -337,6 +352,10 @@
 				DEVELOPMENT_TEAM = BJSCG5463N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KitchenCalc/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -370,6 +389,10 @@
 				DEVELOPMENT_TEAM = BJSCG5463N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KitchenCalc/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
