@@ -27,7 +27,7 @@ class CalcViewModel {
         guard !listOfMeasure.isEmpty else { return }
         
         if showImperial == true { // если тогл в настройках вкл
-            inMeasure = listOfMeasure.first { $0.isWeight && $0.isImperial } ?? listOfMeasure[0] // дефолтное входное знач = первое из списка имперских весов (oz)
+            inMeasure = listOfMeasure.first { $0.isWeight && $0.isImperial } ?? listOfMeasure[1] // дефолтное входное знач = второе из списка имперских весов (oz)
             outMeasure = listOfMeasure.first { !$0.isWeight && $0.isImperial } ?? listOfMeasure[0] // дефолтное выходное знач = первое из списка имперских объемов (fl oz)
         } else {
             inMeasure = listOfMeasure.first { $0.isWeight } ?? listOfMeasure[0]
@@ -68,9 +68,9 @@ class CalcViewModel {
         let solveResult = SolveResult(
             id: UUID(),
             inValue: inValue,
-            inMeasure: inMeasure.shortTitle,
+            inMeasure: inMeasure.displayShortTitle,
             ingredient: selectedIngredient.title,
-            outMeasure: outMeasure.shortTitle,
+            outMeasure: outMeasure.displayShortTitle,
             value: outValue)
         context.insert(solveResult)
     }

@@ -18,6 +18,11 @@ struct SettingsView: View {
                 } footer: {
                     Text("Show ounces, pounds, fluid ounces, and pints in the unit picker.")
                 }
+                
+                Button ("Custom units") {
+                    
+                }
+                
             }
             .navigationTitle("Settings")
         }

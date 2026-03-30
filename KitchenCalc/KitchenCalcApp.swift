@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct KitchenCalcApp: App {
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -17,9 +18,12 @@ struct KitchenCalcApp: App {
         .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self]) { result in
             guard let container = try? result.get() else { return }
             let context = container.mainContext
-            guard let existing = try? context.fetch(FetchDescriptor<Ingredient>()),
-                existing.isEmpty else { return }
+            guard let existingIngridients = try? context.fetch(FetchDescriptor<Ingredient>()),
+                existingIngridients.isEmpty else { return }
             Ingredient.mockData.forEach { context.insert($0) }
+            guard let existingMeasures = try? context.fetch(FetchDescriptor<Measure>()),
+                existingMeasures.isEmpty else { return }
+            Measure.mockDataMeasure.forEach { context.insert($0) }
         }
     }
 }

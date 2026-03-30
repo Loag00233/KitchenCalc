@@ -13,6 +13,7 @@ struct ProductSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @Query var ingredients: [Ingredient]
     @State private var showAddIngredientSheet = false
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         NavigationStack {
@@ -23,9 +24,16 @@ struct ProductSheetView: View {
                 } label: {
                     HStack {
                         Text(ingredient.title)
+                        ingredient.badge
                         Spacer()
                         Text("\(Int(ingredient.density)) kg/m³")
                             .foregroundStyle(Color.textSecondary)
+                    }
+                }
+                .swipeActions {
+                    Button("Delete", role: .destructive) {
+                        modelContext.delete(ingredient)
+                        try? modelContext.save()
                     }
                 }
             }
