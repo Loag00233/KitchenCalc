@@ -23,6 +23,7 @@
 		FAAB5CBD2F77944F00FDB325 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */; };
 		FAAB5D5E2F798A5100FDB325 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5D2F798A5100FDB325 /* Badge.swift */; };
 		FAAB5D602F7B0F9C00FDB325 /* CustomMeasuresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasuresView.swift */; };
+		FAAB5D622F7BB36B00FDB325 /* AddMeasureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FAAB5D5D2F798A5100FDB325 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasuresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMeasuresView.swift; sourceTree = "<group>"; };
+		FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeasureView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				FAA127B42F72D9DC0099CAFB /* ResultCell.swift */,
 				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
 				FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */,
+				FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				FAA127A92F726C2F0099CAFB /* Theme.swift in Sources */,
 				FAA127B72F72D9DC0099CAFB /* CalcView.swift in Sources */,
 				FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */,
+				FAAB5D622F7BB36B00FDB325 /* AddMeasureView.swift in Sources */,
 				FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */,
 				FAA127BA2F72D9DC0099CAFB /* ViewModel.swift in Sources */,
 				FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */,
