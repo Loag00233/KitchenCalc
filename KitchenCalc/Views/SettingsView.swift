@@ -19,8 +19,12 @@ struct SettingsView: View {
                     Text("Show ounces, pounds, fluid ounces, and pints in the unit picker.")
                 }
                 
-                Button ("Custom units") {
-                    
+//                NavigationLink ("List of your products") {
+//                    ProductSheetView()
+//                }
+                
+                NavigationLink("List of your measures") {
+                    CustomMeasuresView()
                 }
                 
             }
