@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("showImperial") private var showImperial = false
+    
+    @Environment(CalcViewModel.self) private var viewModel
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack {
             Form {
                 Section {
-                    Toggle("Imperial units", isOn: $showImperial)
+                    Toggle("Imperial units", isOn: $viewModel.showImperial)
                 } footer: {
                     Text("Show ounces, pounds, fluid ounces, and pints in the unit picker.")
                 }

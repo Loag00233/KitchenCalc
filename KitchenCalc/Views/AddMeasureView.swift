@@ -17,7 +17,7 @@ struct AddMeasureView: View {
     @State private var isCustom: Bool = true
     
     @Environment(\.modelContext) var modelContext
-    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         TextField("Title", text: $title)
@@ -30,7 +30,8 @@ struct AddMeasureView: View {
           }
           .pickerStyle(.segmented)
         Button("Save") {
-            
+            saveMeasure()
+            dismiss()
         }
     }
     
