@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var viewModel = CalcViewModel()
+    @Environment(\.modelContext) private var modelContext
+    
     var body: some View {
         TabView {
             CalcView()
@@ -15,13 +19,15 @@ struct ContentView: View {
                     Image(systemName: "chart.bar.fill")
                     Text("Converter")
                 }
-
+            
             SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")
                 }
         }
+        .environment(viewModel)
+        .onAppear { viewModel.setup(modelContext) }        
     }
 }
 
