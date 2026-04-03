@@ -29,7 +29,7 @@ extension Color {
 }
 
 extension Font {
-    static let productTitle = Font.system(size: 17, weight: .semibold)
+    static let viewTitle = Font.system(size: 17, weight: .semibold)
     static let converterValue = Font.system(size: 40, weight: .light)
     static let sectionHeader = Font.system(size: 13, weight: .semibold)
     static let bodyRegular = Font.system(size: 15)

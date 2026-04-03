@@ -139,5 +139,9 @@ class CalcViewModel {
         !title.isEmpty && !shortTitle.isEmpty && koefficient > 0
     }
     
+    func checkNewIngredientIsValid(title: String, density: Double) -> Bool {
+        !title.isEmpty && density > 0
+    }
+    
 }
 

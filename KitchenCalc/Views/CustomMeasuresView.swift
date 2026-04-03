@@ -46,9 +46,6 @@ struct CustomMeasuresView: View {
             AddMeasureView()
         }
         
-        
-        
-        
     }
 }
 

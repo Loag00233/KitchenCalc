@@ -18,35 +18,41 @@ struct AddMeasureView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            TextField("Title", text: $title)
-                .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
-            TextField("ShortTitle", text: $shortTitle)
-                .modifier(TextFieldMod(isInvalid: showValidation && shortTitle.isEmpty))
-            TextField("Koefficient", value: $koefficient, format: .number)
-                .modifier(TextFieldMod(isInvalid: showValidation && koefficient <= 0 ))
-                .keyboardType(.decimalPad)
-            Picker("Type", selection: $isWeight) {
-                Text("Weight").tag(true)
-                Text("Volume").tag(false)
-            }
-            .pickerStyle(.segmented)
+        NavigationStack {
             
-            Button("Save") {
-                guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: koefficient) else {
-                    showValidation = true
-                    return
+            VStack {
+                TextField("Title", text: $title)
+                    .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+                
+                TextField("ShortTitle", text: $shortTitle)
+                    .modifier(TextFieldMod(isInvalid: showValidation && shortTitle.isEmpty))
+                
+                TextField("Koefficient", value: $koefficient, format: .number)
+                    .modifier(TextFieldMod(isInvalid: showValidation && koefficient <= 0 ))
+                    .keyboardType(.decimalPad)
+                
+                Picker("Type", selection: $isWeight) {
+                    Text("Weight").tag(true)
+                    Text("Volume").tag(false)
                 }
-                viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: koefficient, isWeight: isWeight)
-                dismiss()
+                .pickerStyle(.segmented)
+                
+                Button("Save") {
+                    guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: koefficient) else {
+                        showValidation = true
+                        return
+                    }
+                    viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: koefficient, isWeight: isWeight)
+                    dismiss()
+                }
+                .modifier(ButtonMod(color: .blue))
+                if showValidation {
+                    Text("Please fill in all fields")
+                        .foregroundStyle(.red)
+                }
             }
-            .modifier(ButtonMod(color: .blue))
-            if showValidation {
-                Text("Please fill in all fields")
-                    .foregroundStyle(.red)
-            }
+            .navigationTitle("New Measure")
+            .padding(.horizontal, Spacing.medium)
         }
-        .padding(.horizontal, Spacing.medium)
     }
-    
 }
