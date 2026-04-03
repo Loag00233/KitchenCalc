@@ -39,14 +39,20 @@ struct CalcView: View {
     
     @ViewBuilder private func controlsBlock() -> some View {
         @Bindable var viewModel = viewModel
-
+        
         VStack(spacing: Spacing.large) {
             
             Button {
                 showProductSheet = true
             } label: {
                 HStack(spacing: Spacing.extraSmall) {
-                    Text(viewModel.selectedIngredient?.title ?? "Select product")
+                    Group {
+                        if let ingredient = viewModel.selectedIngredient {
+                            Text(ingredient.title)
+                        } else {
+                            Text("Select product")
+                        }
+                    }
                         .font(.viewTitle)
                         .foregroundStyle(Color.textPrimary)
                     if let density = viewModel.selectedIngredient?.density {
