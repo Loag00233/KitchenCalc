@@ -11,13 +11,12 @@ import SwiftData
 struct CustomMeasuresView: View {
     
     @State private var showAddSheet = false
-    @Environment(\.modelContext) var modelContext
-    @Query(filter: #Predicate<Measure> {$0.isCustom} ) var customMeasures: [Measure]
+    @Environment(CalcViewModel.self) private var viewModel
     
     var body: some View {
         
         Group {
-            if customMeasures.isEmpty {
+            if viewModel.customMeasures.isEmpty {
                 ContentUnavailableView {
                     Label("No custom measures", systemImage: "ruler")
                 } description: {
@@ -28,7 +27,7 @@ struct CustomMeasuresView: View {
                     }
                 }
             } else {
-                List(customMeasures) { measure in
+                List(viewModel.customMeasures) { measure in
                     HStack{
                         Text(measure.displayTitle)
                         Text("(\(measure.displayShortTitle))")
