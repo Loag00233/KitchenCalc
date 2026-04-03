@@ -9,12 +9,10 @@ import SwiftUI
 
 extension Color {
     
-    // Текст
     static let textPrimary = Color.black.opacity(0.82)
     static let textSecondary = Color.black.opacity(0.42)
     static let textTertiary = Color.black.opacity(0.28)
     
-    // Акцент (синий из конвертера)
     static let accent = Color.accentColor
     
     // Градиент фона
@@ -59,11 +57,17 @@ enum Radius {
 }
 
 struct TextFieldMod: ViewModifier {
+    var isInvalid: Bool = false
+
     func body(content: Content) -> some View {
         content
             .padding(Spacing.large)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
+            .overlay(
+                RoundedRectangle(cornerRadius: Radius.card)
+                    .stroke(isInvalid ? Color.red : Color.clear)
+            )
     }
 }
 

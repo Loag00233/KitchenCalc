@@ -135,5 +135,9 @@ class CalcViewModel {
         fetchSolveResults()
     }
     
+    func checkNewMeasureIsValid(title: String, shortTitle: String, koefficient: Double) -> Bool {
+        !title.isEmpty && !shortTitle.isEmpty && koefficient > 0
+    }
+    
 }
 
