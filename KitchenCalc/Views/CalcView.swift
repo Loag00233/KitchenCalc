@@ -47,7 +47,7 @@ struct CalcView: View {
             } label: {
                 HStack(spacing: Spacing.extraSmall) {
                     Text(viewModel.selectedIngredient?.title ?? "Select product")
-                        .font(.productTitle)
+                        .font(.viewTitle)
                         .foregroundStyle(Color.textPrimary)
                     if let density = viewModel.selectedIngredient?.density {
                         Text("\(Int(density)) kg/m³")

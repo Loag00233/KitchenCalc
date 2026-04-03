@@ -6,47 +6,44 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct AddIngredientView: View {
     @State private var title: String = ""
-    @State private var density: Double?
-    @Environment(\.modelContext) var modelContext
+    @State private var density: Double = 0
+    @State private var showValidation = false
+    @Environment(CalcViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
     
-    
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.large) {
-            Text("New Ingredient")
-                .font(Font.productTitle)
-            TextField("Ingredient title", text: $title)
-                .modifier(KeyboardOk())
-                .modifier(TextFieldMod())
-            TextField("Ingredient's density", value: $density, format: .number)
-                .keyboardType(.decimalPad)
-                .modifier(TextFieldMod())
-            Button{
-                saveIngredient()
-                dismiss()
-            } label: {
-                Text("Save")
-                    .modifier(ButtonMod(color: .accent))
+        NavigationStack {
+            
+            VStack(alignment: .leading, spacing: Spacing.large) {
+                TextField("Ingredient title", text: $title)
+                    .modifier(KeyboardOk())
+                    .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+                
+                TextField("Ingredient's density", value: $density, format: .number)
+                    .keyboardType(.decimalPad)
+                    .modifier(TextFieldMod(isInvalid: showValidation && density <= 0))
+                
+                Button("Save") {
+                    guard viewModel.checkNewIngredientIsValid(title: title, density: density) else {
+                        showValidation = true
+                        return
+                    }
+                    viewModel.saveIngredient(title: title, density: density)
+                    dismiss()
+                }
+                .modifier(ButtonMod(color: .blue))
+                
+                if showValidation {
+                    Text("Please fill in all fields")
+                        .foregroundStyle(.red)
+                }
             }
+            .navigationTitle("New Ingredient")
+            .padding(.horizontal, Spacing.medium)
+            .hideKeyboardOnTap()
         }
-        .padding(.horizontal, Spacing.medium)
-        .hideKeyboardOnTap()
-        
     }
-    
-    private func saveIngredient() {
-        guard let density, density > 0 else {return}
-        guard !title.isEmpty else {return}
-        let ingredient = Ingredient(title: title, density: density)
-        modelContext.insert(ingredient)
-        try? modelContext.save()
-    }
-}
-
-#Preview {
-    AddIngredientView()
 }

@@ -10,14 +10,13 @@ import SwiftData
 
 struct ProductSheetView: View {
     @Binding var selectedIngredient: Ingredient?
-    @Environment(\.dismiss) private var dismiss
-    @Query var ingredients: [Ingredient]
     @State private var showAddIngredientSheet = false
-    @Environment(\.modelContext) private var modelContext
+    @Environment(CalcViewModel.self) private var viewModel
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack {
-            List(ingredients) { ingredient in
+            List(viewModel.ingredients) { ingredient in
                 Button {
                     selectedIngredient = ingredient
                     dismiss()
@@ -31,16 +30,15 @@ struct ProductSheetView: View {
                     }
                 }
                 .swipeActions {
-                    Button("Delete", role: .destructive) {
-                        modelContext.delete(ingredient)
-                        try? modelContext.save()
+                    Button("Delete") {
+                        viewModel.deleteIngredient(ingredient)
                     }
                 }
             }
             .navigationTitle("Select product")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button("", systemImage: "plus") {
+                    Button("Add") {
                         showAddIngredientSheet.toggle()
                     }
                 }
