@@ -77,7 +77,7 @@ struct CalcView: View {
             .padding(.horizontal, Spacing.medium)
             
             .sheet(isPresented: $showProductSheet) {
-                ProductSheetView(selectedIngredient: $viewModel.selectedIngredient)
+                ProductSheetView()
             }
             
             

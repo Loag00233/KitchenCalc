@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct CustomMeasuresView: View {
+struct CustomMeasureListView: View {
     
     @State private var showAddSheet = false
     @Environment(CalcViewModel.self) private var viewModel
@@ -42,13 +42,13 @@ struct CustomMeasuresView: View {
         }
         .navigationTitle("List of your measures")
         .sheet(isPresented: $showAddSheet) {
-            AddMeasureView()
+            AddMeasureView(isNew: true, measure: nil)
         }
         
     }
 }
 
 #Preview {
-    CustomMeasuresView()
+    CustomMeasureListView()
 }
 

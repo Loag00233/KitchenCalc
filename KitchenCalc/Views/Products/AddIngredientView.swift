@@ -8,30 +8,31 @@
 import SwiftUI
 
 struct AddIngredientView: View {
+    let isNew: Bool
     @State private var title: String = ""
-    @State private var density: Double = 0
+    @State private var density: Double?
     @State private var showValidation = false
     @Environment(CalcViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationStack {
             
             VStack(alignment: .leading, spacing: Spacing.large) {
                 TextField("Ingredient title", text: $title)
-                    .modifier(KeyboardOk())
                     .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
                 
                 TextField("Ingredient's density", value: $density, format: .number)
                     .keyboardType(.decimalPad)
-                    .modifier(TextFieldMod(isInvalid: showValidation && density <= 0))
+                    .modifier(
+                        TextFieldMod(isInvalid: densityValidation())
+                    )
                 
                 Button("Save") {
-                    guard viewModel.checkNewIngredientIsValid(title: title, density: density) else {
+                    guard viewModel.checkNewIngredientIsValid(title: title, density: density ?? 0 ) else {
                         showValidation = true
                         return
                     }
-                    viewModel.saveIngredient(title: title, density: density)
+                    isNew ? viewModel.saveIngredient(title: title, density: density ?? 0) : viewModel.updateIngredient(title: title, density: density)
                     dismiss()
                 }
                 .modifier(ButtonMod(color: .blue))
@@ -41,9 +42,22 @@ struct AddIngredientView: View {
                         .foregroundStyle(.red)
                 }
             }
-            .navigationTitle("New Ingredient")
+            .navigationTitle(isNew ? "New Ingredient" : "Edit Ingredient")
             .padding(.horizontal, Spacing.medium)
+            .modifier(KeyboardOk())
             .hideKeyboardOnTap()
-        }
+            .onAppear{
+                if !isNew {
+                    if let ingredient = viewModel.selectedIngredient {
+                        self.title = ingredient.title
+                        self.density = ingredient.density
+                    }
+                }
+            }
     }
+    
+    func densityValidation() -> Bool {
+        return showValidation && (density ?? 0) <= 0
+    }
+    
 }

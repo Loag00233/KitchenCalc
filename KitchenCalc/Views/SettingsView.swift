@@ -15,26 +15,35 @@ struct SettingsView: View {
         @Bindable var viewModel = viewModel
         NavigationStack {
             Form {
+                
                 Section {
                     Toggle("Imperial units", isOn: $viewModel.showImperial)
                 } footer: {
                     Text("Show ounces, pounds, fluid ounces, and pints in the unit picker.")
                 }
                 
-//                NavigationLink ("List of your products") {
-//                    ProductSheetView()
-//                }
-                
-                NavigationLink("List of your measures") {
-                    CustomMeasuresView()
+                Section {
+                    NavigationLink("List of your products") {
+                        SettingsProductView()
+                    }
+                } footer: {
+                    Text("Customize your ingredient list. Add / Edit / Delete ingredients with density values")
                 }
                 
+                Section {
+                    NavigationLink("List of your measures") {
+                        CustomMeasureListView()
+                    }
+                } footer: {
+                    Text("Customize your list of Measures. Add / Edit / Delete units of measurement to convert ingredients them accurately ")
+                }
             }
             .navigationTitle("Settings")
         }
     }
+    
 }
 
-#Preview {
-    SettingsView()
-}
+//#Preview {
+//    SettingsView()
+//}

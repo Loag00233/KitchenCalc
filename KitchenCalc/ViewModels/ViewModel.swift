@@ -90,10 +90,25 @@ class CalcViewModel {
         save()
     }
     
+    func updateIngredient(title: String, density: Double?) {
+        guard let selectedIngredient, let density else { return }
+        selectedIngredient.title = title
+        selectedIngredient.density = density
+        try? self.modelContext?.save()
+    }
+    
     func deleteIngredient(_ ingredient: Ingredient) {
         self.modelContext?.delete(ingredient)
         fetchIngredients()
         save()
+    }
+    
+    func updateMeasure(_ measure: Measure, title: String, shortTitle: String, koefficient: Double, isWeight: Bool) {
+        measure.title = title
+        measure.shortTitle = shortTitle
+        measure.koefficient = koefficient
+        measure.isWeight = isWeight
+        try? self.modelContext?.save()
     }
     
     func deleteMeasure(_ measure: Measure) {

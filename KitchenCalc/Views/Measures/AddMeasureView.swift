@@ -9,16 +9,18 @@ import SwiftUI
 
 struct AddMeasureView: View {
     
+    let isNew: Bool
+    let measure: Measure?
     @State private var title: String = ""
     @State private var shortTitle: String = ""
-    @State private var koefficient: Double = 0
+    @State private var koefficient: Double?
     @State private var isWeight: Bool = true
     @State private var showValidation = false
     @Environment(CalcViewModel.self) private var viewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             
             VStack {
                 TextField("Title", text: $title)
@@ -28,7 +30,9 @@ struct AddMeasureView: View {
                     .modifier(TextFieldMod(isInvalid: showValidation && shortTitle.isEmpty))
                 
                 TextField("Koefficient", value: $koefficient, format: .number)
-                    .modifier(TextFieldMod(isInvalid: showValidation && koefficient <= 0 ))
+                    .modifier(
+                        TextFieldMod(isInvalid: measureValidation())
+                    )
                     .keyboardType(.decimalPad)
                 
                 Picker("Type", selection: $isWeight) {
@@ -38,11 +42,13 @@ struct AddMeasureView: View {
                 .pickerStyle(.segmented)
                 
                 Button("Save") {
-                    guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: koefficient) else {
+                    guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: koefficient ?? 0) else {
                         showValidation = true
                         return
                     }
-                    viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: koefficient, isWeight: isWeight)
+                    isNew ?
+                    viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: koefficient ?? 0, isWeight: isWeight) :
+                    viewModel.updateMeasure(measure!, title: title, shortTitle: shortTitle, koefficient: koefficient ?? 0, isWeight: isWeight)
                     dismiss()
                 }
                 .modifier(ButtonMod(color: .blue))
@@ -51,8 +57,22 @@ struct AddMeasureView: View {
                         .foregroundStyle(.red)
                 }
             }
-            .navigationTitle("New Measure")
+            .navigationTitle(isNew ? "New Measure" : "Edit Measure")
             .padding(.horizontal, Spacing.medium)
-        }
+            .modifier(KeyboardOk())
+            .hideKeyboardOnTap()
+            .onAppear{
+                if !isNew {
+                    title = measure?.title ?? ""
+                    shortTitle = measure?.shortTitle ?? ""
+                    koefficient = measure?.koefficient
+                    isWeight = measure?.isWeight ?? true
+                    }
+                }
+//        }
+    }
+    
+    func measureValidation() -> Bool {
+        return showValidation && (koefficient ?? 0) <= 0
     }
 }
