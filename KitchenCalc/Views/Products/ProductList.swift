@@ -13,6 +13,7 @@ struct ProductList: View {
     var action: () -> ()
     
     var body: some View {
+
         List(viewModel.ingredients) { ingredient in
             Button {
                 viewModel.selectedIngredient = ingredient
@@ -22,7 +23,7 @@ struct ProductList: View {
                     Text(ingredient.title)
                     ingredient.badge
                     Spacer()
-                    Text("\(Int(ingredient.density)) kg/m³")
+                    Text("\(Double(ingredient.density)) g/ml")
                         .foregroundStyle(Color.textSecondary)
                 }
             }

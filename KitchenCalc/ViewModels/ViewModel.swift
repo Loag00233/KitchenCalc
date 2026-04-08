@@ -30,7 +30,10 @@ class CalcViewModel {
     
     func solve() {
         guard let inValue,
-              let selectedIngredient else {
+              let selectedIngredient,
+              inMeasure.koefficient > 0,
+              outMeasure.koefficient > 0
+        else {
             self.outValue = nil
             return
         }
@@ -81,10 +84,10 @@ class CalcViewModel {
         save()
     }
     
-    func saveMeasure(title: String, shortTitle: String, koefficient: Double, isWeight: Bool) {
+    func saveMeasure(title: String, shortTitle: String, koefficient: Double, isWeight: Bool, isImperial: Bool) {
         guard !title.isEmpty && !shortTitle.isEmpty else { return }
         guard koefficient > 0 else { return }
-        let measure = Measure(title: title, shortTitle: shortTitle, koefficient: koefficient, isWeight: isWeight, isCustom: true)
+        let measure = Measure(title: title, shortTitle: shortTitle, koefficient: koefficient, isWeight: isWeight, isImperial: isImperial, isCustom: true)
         self.modelContext?.insert(measure)
         fetchMeasures()
         save()
@@ -103,11 +106,12 @@ class CalcViewModel {
         save()
     }
     
-    func updateMeasure(_ measure: Measure, title: String, shortTitle: String, koefficient: Double, isWeight: Bool) {
+    func updateMeasure(_ measure: Measure, title: String, shortTitle: String, koefficient: Double, isImperial: Bool, isWeight: Bool) {
         measure.title = title
         measure.shortTitle = shortTitle
         measure.koefficient = koefficient
         measure.isWeight = isWeight
+        measure.isImperial = isImperial
         try? self.modelContext?.save()
     }
     
@@ -130,14 +134,16 @@ class CalcViewModel {
     func setup(_ context: ModelContext) {
         self.modelContext = context
         fetchAll()
+        if let defaultIn = filteredMeasures.first { inMeasure = defaultIn }
+        if let defaultOut = filteredMeasures.last { outMeasure = defaultOut }
     }
     
     private func fetchIngredients() {
-        ingredients = (try? self.modelContext?.fetch(FetchDescriptor<Ingredient>())) ?? []
+        ingredients = (try? self.modelContext?.fetch(FetchDescriptor<Ingredient>(sortBy: [SortDescriptor(\.title)]))) ?? []
     }
     
     private func fetchMeasures() {
-        measures = (try? self.modelContext?.fetch(FetchDescriptor<Measure>())) ?? []
+        measures = (try? self.modelContext?.fetch(FetchDescriptor<Measure>(sortBy: [SortDescriptor(\.koefficient)] ))) ?? []
     }
     
     private func fetchSolveResults() {
@@ -156,6 +162,18 @@ class CalcViewModel {
     
     func checkNewIngredientIsValid(title: String, density: Double) -> Bool {
         !title.isEmpty && density > 0
+    }
+    
+    func trimShortTitle(text: String) -> String {
+          String(text.prefix(5))
+      }
+    
+    func convertToKoefficient(input: Double, isWeight: Bool, isImperial: Bool) -> Double {
+        if isWeight {
+            return isImperial ? input * 28.3495 /* 1 ounce = 28.3495 g*/ : input /* thats gram*/
+        } else {
+            return isImperial ? input * 29.5735 /* 1 ml = 29.5735 fl oz */ : input  /*thats ml*/
+        }
     }
     
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddIngredientView: View {
     let isNew: Bool
@@ -16,16 +17,29 @@ struct AddIngredientView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
+        
+        ScrollView {
             
-            VStack(alignment: .leading, spacing: Spacing.large) {
-                TextField("Ingredient title", text: $title)
-                    .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+            VStack(alignment: .leading, spacing: Spacing.extraLarge) {
                 
-                TextField("Ingredient's density", value: $density, format: .number)
-                    .keyboardType(.decimalPad)
-                    .modifier(
-                        TextFieldMod(isInvalid: densityValidation())
-                    )
+                Text("Create a custom unit of measurement. It will appear in the converter's unit list.")
+                    .font(.bodyRegular)
+                    .foregroundStyle(Color.textSecondary)
+                
+                VStack(alignment: .leading) {
+                    Text("Name")
+                    TextField("e.g. Almond flour", text: $title)
+                        .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Density ") + Text("(g/mL)").foregroundStyle(Color.textSecondary)
+                    TextField("e.g. 0.45", value: $density, format: .number.grouping(.never))
+                        .keyboardType(.decimalPad)
+                        .modifier(
+                            TextFieldMod(isInvalid: densityValidation())
+                        )
+                }
                 
                 Button("Save") {
                     guard viewModel.checkNewIngredientIsValid(title: title, density: density ?? 0 ) else {
@@ -54,10 +68,22 @@ struct AddIngredientView: View {
                     }
                 }
             }
+        }
     }
     
     func densityValidation() -> Bool {
         return showValidation && (density ?? 0) <= 0
     }
     
+}
+
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Measure.self, Ingredient.self, configurations: config)
+    let vm = CalcViewModel()
+    NavigationStack {
+        AddIngredientView(isNew: true)
+    }
+    .environment(vm)
+    .modelContainer(container)
 }

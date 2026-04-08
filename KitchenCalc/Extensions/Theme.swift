@@ -16,16 +16,15 @@ extension Color {
     static let accent = Color.accentColor
     
     // Градиент фона
-    static let gradientMint = Color(red: 0.70, green: 0.93, blue: 0.85)
-    static let gradientSky = Color(red: 0.55, green: 0.82, blue: 0.95)
-    static let gradientBlue = Color(red: 0.22, green: 0.50, blue: 0.85)
-    
-    // Готовый градиент как ShapeStyle
     static let appBackground = LinearGradient(
-        colors: [.gradientMint, .gradientSky, .gradientBlue],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
+            colors: [
+                Color("gradientTop"),
+                Color("gradientMid"),
+                Color("gradientBottom")
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
 }
 
 extension Font {

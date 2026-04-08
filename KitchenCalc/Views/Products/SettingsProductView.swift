@@ -21,9 +21,17 @@ struct SettingsProductView: View {
         .navigationDestination(isPresented: $showIngredientEditView) {
             AddIngredientView(isNew: false)
         }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                NavigationLink("Add") {
+                    AddIngredientView(isNew: true)
+                }
+            }
+        }
     }
 }
 
 #Preview {
     SettingsProductView()
+        .environment(CalcViewModel())
 }

@@ -27,7 +27,7 @@ struct ContentView: View {
                 }
         }
         .environment(viewModel)
-        .onAppear { viewModel.setup(modelContext) }        
+        .onAppear { viewModel.setup(modelContext) }
     }
 }
 

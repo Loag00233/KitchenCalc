@@ -47,8 +47,8 @@ class Ingredient: Hashable {
     
     var confidence: DensityConfidence {
         switch density {
-        case 950...:   return .exact      // вода, молоко, масло, мёд
-        case 800..<950: return .approximate // сахар, соль, рис
+        case 0.95...:   return .exact      // вода, молоко, масло, мёд
+        case 0.80..<0.95: return .approximate // сахар, соль, рис
         default:       return .rough      // мука, кофе и всё сыпучее лёгкое
         }
     }
@@ -60,12 +60,12 @@ class Ingredient: Hashable {
     }
     
     static let mockData: [Ingredient] = [
-        .init(title: String(localized: "ingredient_sugar"), density: 1600),
-        .init(title: String(localized: "ingredient_water"), density: 1000),
-        .init(title: String(localized: "ingredient_salt"), density: 1100),
-        .init(title: String(localized: "ingredient_rice"), density: 750),
-        .init(title: String(localized: "ingredient_flour"), density: 600),
-        .init(title: String(localized: "ingredient_sunflower_oil"), density: 920)
+        .init(title: String(localized: "ingredient_sugar"), density: 1.6),
+        .init(title: String(localized: "ingredient_water"), density: 1.0),
+        .init(title: String(localized: "ingredient_salt"), density: 1.1),
+        .init(title: String(localized: "ingredient_rice"), density: 0.75),
+        .init(title: String(localized: "ingredient_flour"), density: 0.6),
+        .init(title: String(localized: "ingredient_sunflower_oil"), density: 0.92)
     ]
     
     

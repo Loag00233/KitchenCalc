@@ -10,11 +10,10 @@ import SwiftData
 
 struct CustomMeasureListView: View {
     
-    //@State private var showAddSheet = false
+    
     @Environment(CalcViewModel.self) private var viewModel
     
     var body: some View {
-        
         Group {
             if viewModel.customMeasures.isEmpty {
                 ContentUnavailableView {
@@ -22,13 +21,13 @@ struct CustomMeasureListView: View {
                 } description: {
                     Text("You haven't added any measures yet.")
                 } actions: {
-                    Button("Add New Measure") {
-                        NavigationLink(AddMeasureView(isNew: true, measure: nil))
-                    }
+                    NavigationLink("Add New Measure") { AddMeasureView(isNew: true, measure: nil) }
                 }
             } else {
                 List(viewModel.customMeasures) { measure in
-                    NavigationLink(value: measure){
+                    NavigationLink{
+                        AddMeasureView(isNew: false, measure: measure)
+                    } label: {
                         HStack{
                             Text(measure.displayTitle)
                             Text("(\(measure.displayShortTitle))")
@@ -41,20 +40,15 @@ struct CustomMeasureListView: View {
                             viewModel.deleteMeasure(measure)
                         }
                     }
-                    .toolbar{
-                        NavigationLink{
-                            AddMeasureView(isNew: true, measure: nil)
-                        }label: {
-                            Text("Add")
-                        }
-                        
-                        
-                    }
-                    .navigationDestination(for: Measure.self) { measure in
-                        AddMeasureView(isNew: false, measure: measure)
-                    }
-                    .navigationTitle("List of your measures")
                 }
+                .toolbar {
+                    NavigationLink{
+                        AddMeasureView(isNew: true, measure: nil)
+                    }label: {
+                        Text("Add")
+                    }
+                }
+                .navigationTitle("List of your measures")
             }
         }
     }

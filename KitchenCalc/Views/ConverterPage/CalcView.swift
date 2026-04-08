@@ -56,7 +56,7 @@ struct CalcView: View {
                         .font(.viewTitle)
                         .foregroundStyle(Color.textPrimary)
                     if let density = viewModel.selectedIngredient?.density {
-                        Text("\(Int(density)) kg/m³")
+                        Text("\(Int(density)) g/ml")
                             .font(.bodyRegular)
                             .foregroundStyle(Color.textSecondary)
                     }
@@ -85,7 +85,7 @@ struct CalcView: View {
                 
                 // Входные значения
                 HStack {
-                    TextField("Value", value: $viewModel.inValue, format: .number)
+                    TextField("Value", value: $viewModel.inValue, format: .number.grouping(.never))
                         .font(.converterValue)
                         .foregroundStyle(Color.accent)
                         .keyboardType(.decimalPad)
@@ -113,7 +113,7 @@ struct CalcView: View {
                 HStack {
                     
                     Text((viewModel.outValue ?? 0)
-                        .formatted(.number.precision(.fractionLength(0...2))))
+                        .formatted(.number.precision(.fractionLength(0...2)).grouping(.never) ))
                     .font(.converterValue)
                     Spacer()
                     unitPicker(selection: $viewModel.outMeasure)
