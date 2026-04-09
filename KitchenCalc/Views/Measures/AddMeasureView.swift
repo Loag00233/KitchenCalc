@@ -15,7 +15,7 @@ struct AddMeasureView: View {
     @State private var shortTitle: String = ""
     @State private var inputKoefficient: Double?
     @State private var isWeight: Bool = true
-    @State private var showValidation = false
+    @State private var showDuplicateError = false
     @State private var isImperial: Bool = false
     
     @Environment(CalcViewModel.self) private var viewModel
@@ -30,21 +30,21 @@ struct AddMeasureView: View {
                     .font(.bodyRegular)
                     .foregroundStyle(Color.textSecondary)
                 
-                //MARK: title
+                //MARK: Title
                 VStack(alignment: .leading) {
                     Text("Name")
                     TextField("e.g. Cup 200 ml", text: $title)
-                        .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+                        .modifier(TextFieldMod(isInvalid: showDuplicateError))
                 }
                 
-                //MARK: short title
+                //MARK: Short title
                 VStack(alignment: .leading) {
                     Text("Abbreviation ") + Text("(5 chars max)").foregroundStyle(Color.textSecondary)
                     TextField("cup", text: $shortTitle)
                         .onChange(of: shortTitle) {
                             shortTitle = viewModel.trimShortTitle(text: shortTitle)
                         }
-                        .modifier(TextFieldMod(isInvalid: showValidation && shortTitle.isEmpty))
+                        .modifier(TextFieldMod(isInvalid: showDuplicateError))
                     Text("Shown in the unit picker")
                         .font(.caption)
                         .foregroundStyle(Color.textTertiary)
@@ -70,8 +70,7 @@ struct AddMeasureView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                    .modifier(
-                        TextFieldMod(isInvalid: measureValidation()))
+                    .modifier( TextFieldMod(isInvalid: false) )
                     
                     Text("The coefficient will be calculated automatically")
                         .font(.caption)
@@ -79,27 +78,41 @@ struct AddMeasureView: View {
                 }
                 
                 // MARK: Save Button
-                Button("Save") {
-                    guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: inputKoefficient ?? 0) else {
-                        showValidation = true
-                        return
+                VStack {
+                    
+                    if title.isEmpty || shortTitle.isEmpty || (inputKoefficient ?? 0) <= 0 {
+                        Text("Fill in all fields to save")
+                            .font(.caption)
+                            .foregroundStyle(Color.textSecondary)
+                            .frame(maxWidth: .infinity, alignment: .leading) 
                     }
                     
-                    //MARK: if measure is Imperial, need to recalculate it
-                    let calculatedKoefficient = viewModel.convertToKoefficient(input: inputKoefficient ?? 0, isWeight: isWeight, isImperial: isImperial)
-                    
-                    //MARK: Reuse of same button to save new or update existing measure
-                    if isNew {
-                        viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isWeight: isWeight, isImperial: isImperial)
-                        dismiss()
-                    } else {
-                        viewModel.updateMeasure(measure!, title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isImperial: isImperial, isWeight: isWeight)
-                        dismiss()
+                    Button("Save") {
+                        showDuplicateError = false
+                        
+                        guard !viewModel.isMeasureDuplicate(title: title, shortTitle: shortTitle, excludingID: isNew ? nil : measure?.id  )
+                        else {
+                            showDuplicateError = true
+                            return
+                        }
+                        
+                        //MARK: if measure is Imperial, need to recalculate it
+                        let calculatedKoefficient = viewModel.convertToKoefficient(input: inputKoefficient ?? 0, isWeight: isWeight, isImperial: isImperial)
+                        
+                        //MARK: Reuse of same button to save new or update existing measure
+                        if isNew {
+                            viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isWeight: isWeight, isImperial: isImperial)
+                            dismiss()
+                        } else {
+                            viewModel.updateMeasure(measure!, title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isImperial: isImperial, isWeight: isWeight)
+                            dismiss()
+                        }
                     }
+                    .modifier(ButtonMod(color: .blue, isEnabled: !title.isEmpty && !shortTitle.isEmpty && (inputKoefficient ?? 0) > 0 ))
                 }
-                .modifier(ButtonMod(color: .blue, isEnabled: !title.isEmpty && !shortTitle.isEmpty && (inputKoefficient ?? 0) > 0 ))
-                if showValidation {
-                    Text("Please fill in all fields")
+                
+                if showDuplicateError {
+                    Text("This Measure already exists. \nIf you cannot find it, turn on Imperial measures")
                         .foregroundStyle(.red)
                 }
             }
@@ -119,10 +132,6 @@ struct AddMeasureView: View {
             
             Spacer()
         }
-    }
-    
-    func measureValidation() -> Bool {
-        return showValidation && (inputKoefficient ?? 0) <= 0
     }
     
 }

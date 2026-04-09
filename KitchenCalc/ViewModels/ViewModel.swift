@@ -156,12 +156,21 @@ class CalcViewModel {
         fetchSolveResults()
     }
     
-    func checkNewMeasureIsValid(title: String, shortTitle: String, koefficient: Double) -> Bool {
-        !title.isEmpty && !shortTitle.isEmpty && koefficient > 0
+    func isIngredientDuplicate(title: String, excludingID: UUID? = nil) -> Bool {
+        ingredients.contains {
+            $0.id != excludingID && // exludes current edit Ingredient
+            $0.title.lowercased() == title.lowercased() // compare to others
+        }
     }
     
-    func checkNewIngredientIsValid(title: String, density: Double) -> Bool {
-        !title.isEmpty && density > 0
+    func isMeasureDuplicate(title: String, shortTitle: String, excludingID: UUID? = nil) -> Bool {
+        measures.contains{
+            $0.id != excludingID &&
+           (
+            $0.title.lowercased() == title.lowercased() ||
+            $0.shortTitle.lowercased() == shortTitle.lowercased()
+           )
+        }
     }
     
     func trimShortTitle(text: String) -> String {

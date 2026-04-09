@@ -12,7 +12,7 @@ struct AddIngredientView: View {
     let isNew: Bool
     @State private var title: String = ""
     @State private var density: Double?
-    @State private var showValidation = false
+    @State private var showDuplicateError = false
     @Environment(CalcViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
     
@@ -41,7 +41,7 @@ struct AddIngredientView: View {
                 VStack(alignment: .leading) {
                     Text("Name")
                     TextField("e.g. Almond flour", text: $title)
-                        .modifier(TextFieldMod(isInvalid: showValidation && title.isEmpty))
+                        .modifier(TextFieldMod(isInvalid: showDuplicateError))
                 }
                 
                 // MARK: Density
@@ -59,7 +59,7 @@ struct AddIngredientView: View {
                         }
                     }
                     .modifier(
-                        TextFieldMod(isInvalid: densityValidation())
+                        TextFieldMod(isInvalid: false)
                     )
                     Text("Water = 1.0 · Milk ≈ 1.03 · Oil ≈ 0.92 · Flour ≈ 0.6")
                         .font(.bodyRegular)
@@ -90,19 +90,31 @@ struct AddIngredientView: View {
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
                 
                 // MARK: Save Button
-                Button("Save") {
-                    guard viewModel.checkNewIngredientIsValid(title: title, density: density ?? 0 ) else {
-                        showValidation = true
-                        return
+                VStack{
+                    
+                    if title.isEmpty || (density ?? 0) <= 0 {
+                        Text("Fill in all fields to save")
+                            .font(.caption)
+                            .foregroundStyle(Color.textSecondary)
+                            .frame(maxWidth: .infinity, alignment: .leading) 
                     }
-                    isNew ? viewModel.saveIngredient(title: title, density: density ?? 0) : viewModel.updateIngredient(title: title, density: density)
-                    dismiss()
+                    
+                    Button("Save") {
+                        showDuplicateError = false
+                        
+                        guard !viewModel.isIngredientDuplicate(title: title, excludingID: isNew ? nil : viewModel.selectedIngredient?.id ) else {
+                            showDuplicateError = true
+                            return }
+                        
+                        isNew ? viewModel.saveIngredient(title: title, density: density ?? 0) : viewModel.updateIngredient(title: title, density: density)
+                        dismiss()
+                    }
+                    .modifier(ButtonMod(color: .blue,
+                                        isEnabled: !title.isEmpty && (density ?? 0) > 0))
                 }
-                .modifier(ButtonMod(color: .blue,
-                                    isEnabled: !title.isEmpty && (density ?? 0) > 0))
                 
-                if showValidation {
-                    Text("Please fill in all fields")
+                if showDuplicateError {
+                    Text("This Ingredient already exists")
                         .foregroundStyle(.red)
                 }
                 
@@ -120,10 +132,6 @@ struct AddIngredientView: View {
                 }
             }
         }
-    }
-    
-    func densityValidation() -> Bool {
-        return showValidation && (density ?? 0) <= 0
     }
     
 }

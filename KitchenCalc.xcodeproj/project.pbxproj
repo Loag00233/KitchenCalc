@@ -151,11 +151,11 @@
 		FAA127B52F72D9DC0099CAFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
 				FA4BBE4F2F84D09300BB53E9 /* Measures */,
 				FA4BBE4E2F84D07200BB53E9 /* Products */,
 				FA4BBE502F84D0CE00BB53E9 /* ConverterPage */,
-				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
