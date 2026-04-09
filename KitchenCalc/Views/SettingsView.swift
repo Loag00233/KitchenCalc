@@ -19,15 +19,15 @@ struct SettingsView: View {
                 Section {
                     Toggle("Imperial units", isOn: $viewModel.showImperial)
                 } footer: {
-                    Text("Show ounces, pounds, fluid ounces, and pints in the unit picker.")
+                    Text("Show ounces, pounds, fluid ounces, and pints in the unit picker")
                 }
                 
                 Section {
-                    NavigationLink("List of your products") {
+                    NavigationLink("List of your ingredients") {
                         SettingsProductView()
                     }
                 } footer: {
-                    Text("Customize your ingredient list. Add / Edit / Delete ingredients with density values")
+                    Text("Customize your Ingredient list. Add / Edit / Delete ingredients with density values")
                 }
                 
                 Section {
@@ -35,7 +35,7 @@ struct SettingsView: View {
                         CustomMeasureListView()
                     }
                 } footer: {
-                    Text("Customize your list of Measures. Add / Edit / Delete units of measurement to convert ingredients them accurately ")
+                    Text("Customize your list of Measures. Add / Edit / Delete units of measurement to convert ingredients them accurately")
                 }
             }
             .navigationTitle("Settings")

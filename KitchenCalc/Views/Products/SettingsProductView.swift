@@ -17,7 +17,7 @@ struct SettingsProductView: View {
                 showIngredientEditView = true
             }
         }
-        .navigationTitle("Все продукты")
+        .navigationTitle("All products")
         .navigationDestination(isPresented: $showIngredientEditView) {
             AddIngredientView(isNew: false)
         }
@@ -31,7 +31,7 @@ struct SettingsProductView: View {
     }
 }
 
-#Preview {
-    SettingsProductView()
-        .environment(CalcViewModel())
-}
+//#Preview {
+//    SettingsProductView()
+//        .environment(CalcViewModel())
+//}

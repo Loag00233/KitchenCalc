@@ -17,14 +17,14 @@ extension Color {
     
     // Градиент фона
     static let appBackground = LinearGradient(
-            colors: [
-                Color("gradientTop"),
-                Color("gradientMid"),
-                Color("gradientBottom")
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        colors: [
+            Color("gradientTop"),
+            Color("gradientMid"),
+            Color("gradientBottom")
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
 }
 
 extension Font {
@@ -36,12 +36,12 @@ extension Font {
 }
 
 extension View {
-      func hideKeyboardOnTap() -> some View {
-          onTapGesture {
-              UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-          }
-      }
-  }
+    func hideKeyboardOnTap() -> some View {
+        onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+    }
+}
 
 enum Spacing {
     static let extraSmall: CGFloat = 4
@@ -57,7 +57,7 @@ enum Radius {
 
 struct TextFieldMod: ViewModifier {
     var isInvalid: Bool = false
-
+    
     func body(content: Content) -> some View {
         content
             .padding(Spacing.large)
@@ -72,12 +72,14 @@ struct TextFieldMod: ViewModifier {
 
 struct ButtonMod: ViewModifier {
     var color: Color
+    var verticalPadding: CGFloat = Spacing.large
+    var isEnabled: Bool = false
     
     func body(content: Content) -> some View {
         content
             .font(Font.bodyRegular)
-            .foregroundStyle(color)
-            .padding(.vertical, Spacing.large)
+            .foregroundStyle(isEnabled ? color : Color.gray)
+            .padding(.vertical, verticalPadding)
             .frame(maxWidth: .infinity, alignment: .center)
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
             .contentShape(RoundedRectangle(cornerRadius: Radius.card))
@@ -85,6 +87,7 @@ struct ButtonMod: ViewModifier {
                 RoundedRectangle(cornerRadius: Radius.card)
                     .stroke(color.opacity(0.4), lineWidth: 1)
             )
+            .opacity(isEnabled ? 1.0 : 0.6)
     }
 }
 

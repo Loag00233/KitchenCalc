@@ -16,10 +16,10 @@ class Ingredient: Hashable {
     var density: Double
     
     enum DensityConfidence {
-        case exact      // жидкости, масло
+        case exact // жидкости, масло
         case approximate // сахар, соль, рис
-        case rough      // мука, кофе, пудра
-
+        case rough // мука, кофе, пудра
+        
         var label: LocalizedStringKey {
             switch self {
             case .exact: return "Exact"
@@ -27,15 +27,15 @@ class Ingredient: Hashable {
             case .rough: return "~ Rough"
             }
         }
-
+        
         var colorBadge: Color {
             switch self {
-            case .exact: return .green
-            case .approximate: return .orange
-            case .rough: return .red
+            case .exact: return Color("confidenceExact")
+            case .approximate: return Color("confidenceApprox")
+            case .rough: return Color("confidenceRough")
             }
         }
-
+        
         var hint: LocalizedStringKey? {
             switch self {
             case .exact: return nil
@@ -45,13 +45,7 @@ class Ingredient: Hashable {
         }
     }
     
-    var confidence: DensityConfidence {
-        switch density {
-        case 0.95...:   return .exact      // вода, молоко, масло, мёд
-        case 0.80..<0.95: return .approximate // сахар, соль, рис
-        default:       return .rough      // мука, кофе и всё сыпучее лёгкое
-        }
-    }
+    var confidence: Ingredient.DensityConfidence { Ingredient.calcDensityBadge(density) }
     
     init(id: UUID = UUID(), title: String, density: Double) {
         self.id = id
@@ -68,7 +62,13 @@ class Ingredient: Hashable {
         .init(title: String(localized: "ingredient_sunflower_oil"), density: 0.92)
     ]
     
-    
+    static func calcDensityBadge(_ density: Double) -> DensityConfidence {
+        switch density {
+        case 0.95...: return .exact // вода, молоко, масло, мёд
+        case 0.80..<0.95: return .approximate // сахар, соль, рис
+        default: return .rough // мука, кофе и всё сыпучее лёгкое
+        }
+    }
 }
 
 

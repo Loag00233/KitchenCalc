@@ -26,7 +26,7 @@ class CalcViewModel {
     }
     var filteredMeasures: [Measure] {showImperial ? self.measures : measures.filter { !$0.isImperial }}
     var customMeasures: [Measure] { measures.filter{$0.isCustom} }
-    
+    var canSaveResult: Bool { inValue != nil && selectedIngredient != nil }
     
     func solve() {
         guard let inValue,
@@ -165,8 +165,8 @@ class CalcViewModel {
     }
     
     func trimShortTitle(text: String) -> String {
-          String(text.prefix(5))
-      }
+        String(text.prefix(5))
+    }
     
     func convertToKoefficient(input: Double, isWeight: Bool, isImperial: Bool) -> Double {
         if isWeight {

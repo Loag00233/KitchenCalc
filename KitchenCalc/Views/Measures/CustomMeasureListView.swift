@@ -19,7 +19,7 @@ struct CustomMeasureListView: View {
                 ContentUnavailableView {
                     Label("No custom measures", systemImage: "ruler")
                 } description: {
-                    Text("You haven't added any measures yet.")
+                    Text("You haven't added any measures yet")
                 } actions: {
                     NavigationLink("Add New Measure") { AddMeasureView(isNew: true, measure: nil) }
                 }

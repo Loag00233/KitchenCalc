@@ -27,9 +27,9 @@ class Measure: Hashable {
     }
     
     var displayImperialKoefficient: Double {
-          guard isImperial else { return koefficient }
-          return isWeight ? koefficient / 28.3495 : koefficient / 29.5735
-      } 
+        guard isImperial else { return koefficient }
+        return isWeight ? koefficient / 28.3495 : koefficient / 29.5735
+    }
     
     init(id: UUID = UUID(),
          title: String,

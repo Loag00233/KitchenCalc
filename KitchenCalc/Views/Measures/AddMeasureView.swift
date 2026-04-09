@@ -26,7 +26,7 @@ struct AddMeasureView: View {
         ScrollView {
             
             VStack(spacing: Spacing.extraLarge) {
-                Text("Create a custom unit of measurement. It will appear in the converter's unit list.")
+                Text("Create a custom unit of measurement. It will appear in the converter's unit list. \ne.g. My mug holds 350ml — add it once, use it forever")
                     .font(.bodyRegular)
                     .foregroundStyle(Color.textSecondary)
                 
@@ -57,12 +57,12 @@ struct AddMeasureView: View {
                 }
                 .pickerStyle(.segmented)
                 
-                //MARK: Koefficient . How much g / fl in Weight OR ml / fl oz in Volume
+                //MARK: Koefficient. How much g / fl in Weight OR ml / fl oz in Volume
                 VStack(alignment: .leading) {
-                    Text("How much in one unit?")
+                    Text("How many g or ml is one \(title.isEmpty ? "unit" : title ) ?")
                     HStack {
                         TextField("e.g. 200", value: $inputKoefficient, format: .number.grouping(.never))
-                        .keyboardType(.decimalPad)
+                            .keyboardType(.decimalPad)
                         
                         Picker("", selection: $isImperial) {
                             Text(isWeight ? "g" : "ml" ).tag(false)
@@ -78,7 +78,7 @@ struct AddMeasureView: View {
                         .foregroundStyle(Color.textTertiary)
                 }
                 
-                
+                // MARK: Save Button
                 Button("Save") {
                     guard viewModel.checkNewMeasureIsValid(title: title, shortTitle: shortTitle, koefficient: inputKoefficient ?? 0) else {
                         showValidation = true
@@ -97,7 +97,7 @@ struct AddMeasureView: View {
                         dismiss()
                     }
                 }
-                .modifier(ButtonMod(color: .blue))
+                .modifier(ButtonMod(color: .blue, isEnabled: !title.isEmpty && !shortTitle.isEmpty && (inputKoefficient ?? 0) > 0 ))
                 if showValidation {
                     Text("Please fill in all fields")
                         .foregroundStyle(.red)
@@ -127,13 +127,13 @@ struct AddMeasureView: View {
     
 }
 
-#Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Measure.self, Ingredient.self, configurations: config)
-    let vm = CalcViewModel()
-    return NavigationStack {
-        AddMeasureView(isNew: true, measure: nil)
-    }
-    .environment(vm)
-    .modelContainer(container)
-}
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: Measure.self, Ingredient.self, configurations: config)
+//    let vm = CalcViewModel()
+//    return NavigationStack {
+//        AddMeasureView(isNew: true, measure: nil)
+//    }
+//    .environment(vm)
+//    .modelContainer(container)
+//}

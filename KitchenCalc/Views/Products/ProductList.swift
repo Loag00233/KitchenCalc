@@ -13,7 +13,7 @@ struct ProductList: View {
     var action: () -> ()
     
     var body: some View {
-
+        
         List(viewModel.ingredients) { ingredient in
             Button {
                 viewModel.selectedIngredient = ingredient
@@ -21,9 +21,9 @@ struct ProductList: View {
             } label: {
                 HStack {
                     Text(ingredient.title)
-                    ingredient.badge
+                    ingredient.confidence.badge
                     Spacer()
-                    Text("\(Double(ingredient.density)) g/ml")
+                    Text("\(Double(ingredient.density).formatted(.number.precision(.fractionLength(0...2)) )) g/ml")
                         .foregroundStyle(Color.textSecondary)
                 }
             }

@@ -8,15 +8,15 @@
 import Foundation
 import SwiftUI
 
-extension Ingredient {
+extension Ingredient.DensityConfidence {
     var badge: some View {
-        Text(confidence.label)
+        Text(label)
             .font(.caption)
             .fontWeight(.medium)
-            .foregroundStyle(confidence.colorBadge)
+            .foregroundStyle(colorBadge)
             .padding(.horizontal, 8)
             .padding(.vertical, 3)
-            .background(confidence.colorBadge.opacity(0.12),
+            .background(colorBadge.opacity(0.12),
                         in: Capsule())
     }
 }

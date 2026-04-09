@@ -53,15 +53,15 @@ struct CalcView: View {
                             Text("Select product")
                         }
                     }
-                        .font(.viewTitle)
-                        .foregroundStyle(Color.textPrimary)
+                    .font(.viewTitle)
+                    .foregroundStyle(Color.textPrimary)
                     if let density = viewModel.selectedIngredient?.density {
-                        Text("\(Int(density)) g/ml")
+                        Text("\(Double(density).formatted(.number.precision(.fractionLength(0...2)) )) g/ml")
                             .font(.bodyRegular)
                             .foregroundStyle(Color.textSecondary)
                     }
                     Spacer()
-                    viewModel.selectedIngredient?.badge
+                    viewModel.selectedIngredient?.confidence.badge
                     Image(systemName: "chevron.right")
                         .foregroundStyle(Color.textTertiary)
                 }
@@ -83,7 +83,7 @@ struct CalcView: View {
             
             VStack(spacing: 0) {
                 
-                // Входные значения
+                // MARK: Входные значения
                 HStack {
                     TextField("Value", value: $viewModel.inValue, format: .number.grouping(.never))
                         .font(.converterValue)
@@ -96,7 +96,9 @@ struct CalcView: View {
                 .padding(.vertical, Spacing.medium)
                 
                 ZStack {
-                    Divider()
+                    Rectangle()
+                        .fill(Color.secondary.opacity(0.25))
+                        .frame(height: 1)
                     Button {
                         viewModel.swapMeasures()
                     } label: {
@@ -105,11 +107,11 @@ struct CalcView: View {
                             .foregroundStyle(Color.textSecondary)
                             .padding(Spacing.small)
                             .background(.ultraThinMaterial, in: Circle())
+                            .frame(maxWidth: .infinity)
                     }
                 }
                 
-                // Рассчетные значения
-                
+                // MARK: Рассчетные значения
                 HStack {
                     
                     Text((viewModel.outValue ?? 0)
@@ -129,7 +131,7 @@ struct CalcView: View {
                             .font(.caption)
                     }
                     .foregroundStyle(viewModel.selectedIngredient?.confidence.colorBadge ?? .orange)
-                    .background(Color.black.opacity(0.2), in: Capsule())
+                    .background(Color.white.opacity(0.2), in: Capsule())
                     .padding(.horizontal, Spacing.large)
                     .padding(.bottom, Spacing.small)
                 }
@@ -138,12 +140,14 @@ struct CalcView: View {
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Radius.card))
             .padding(.horizontal, Spacing.medium)
             
+            // MARK: Save Button
             Button {
                 viewModel.saveSolveResult()
             } label: {
                 Text("Save result")
-                    .modifier(ButtonMod(color: .accent))
+                    .modifier(ButtonMod(color: .accent, isEnabled: viewModel.canSaveResult))
             }
+            .disabled(!viewModel.canSaveResult)
             .padding(.horizontal, Spacing.medium)
         }
         .padding(.bottom, Spacing.large)
@@ -165,6 +169,15 @@ struct CalcView: View {
                             viewModel.deleteSolveResult(result)
                         }
                     }
+                    .contextMenu {
+                        Button {
+                            let cellText = result.ingredient + " " + result.inValue.formatted() + " " + result.inMeasure + "→" + result.value.formatted() + " " + result.outMeasure
+                            UIPasteboard.general.string = cellText
+                        } label: {
+                            Label("Copy", systemImage: "doc.on.doc")
+                        }
+                    }
+                
                     .listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
