@@ -7,30 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA4BBE4B2F840E9500BB53E9 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BBE4A2F840E9500BB53E9 /* ProductList.swift */; };
-		FA4BBE4D2F84409500BB53E9 /* SettingsProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BBE4C2F84409500BB53E9 /* SettingsProductView.swift */; };
+		FA4BBE4B2F840E9500BB53E9 /* IngredientList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BBE4A2F840E9500BB53E9 /* IngredientList.swift */; };
+		FA4BBE4D2F84409500BB53E9 /* SettingsIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BBE4C2F84409500BB53E9 /* SettingsIngredientView.swift */; };
 		FA5F04A42F4198BC008C216A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA5F04A02F4198BC008C216A /* Assets.xcassets */; };
 		FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F04A22F4198BC008C216A /* KitchenCalcApp.swift */; };
 		FAA127A92F726C2F0099CAFB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127A82F726C2B0099CAFB /* Theme.swift */; };
 		FAA127B72F72D9DC0099CAFB /* CalcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B12F72D9DC0099CAFB /* CalcView.swift */; };
 		FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AB2F72D9DC0099CAFB /* Measure.swift */; };
 		FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AC2F72D9DC0099CAFB /* SolveResult.swift */; };
-		FAA127BA2F72D9DC0099CAFB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */; };
+		FAA127BA2F72D9DC0099CAFB /* CalcResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AF2F72D9DC0099CAFB /* CalcResultVM.swift */; };
 		FAA127BB2F72D9DC0099CAFB /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B42F72D9DC0099CAFB /* ResultCell.swift */; };
 		FAA127BC2F72D9DC0099CAFB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127B22F72D9DC0099CAFB /* ContentView.swift */; };
 		FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA127AA2F72D9DC0099CAFB /* Ingredient.swift */; };
 		FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */; };
-		FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */; };
+		FAAB5CB92F75C1B400FDB325 /* IngredientSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CB82F75C1B400FDB325 /* IngredientSheetView.swift */; };
 		FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */; };
 		FAAB5CBD2F77944F00FDB325 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */; };
 		FAAB5D5E2F798A5100FDB325 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5D2F798A5100FDB325 /* Badge.swift */; };
-		FAAB5D602F7B0F9C00FDB325 /* CustomMeasureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasureListView.swift */; };
+		FAAB5D602F7B0F9C00FDB325 /* MeasureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D5F2F7B0F9C00FDB325 /* MeasureListView.swift */; };
 		FAAB5D622F7BB36B00FDB325 /* AddMeasureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */; };
+		FAE0AEAC2F880BEC00235B83 /* IngredientsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE0AEAB2F880BEC00235B83 /* IngredientsVM.swift */; };
+		FAE0AEAE2F880ECD00235B83 /* MeasuresVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE0AEAD2F880ECD00235B83 /* MeasuresVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FA4BBE4A2F840E9500BB53E9 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
-		FA4BBE4C2F84409500BB53E9 /* SettingsProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProductView.swift; sourceTree = "<group>"; };
+		FA4BBE4A2F840E9500BB53E9 /* IngredientList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientList.swift; sourceTree = "<group>"; };
+		FA4BBE4C2F84409500BB53E9 /* SettingsIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsIngredientView.swift; sourceTree = "<group>"; };
 		FA5F048C2F4044E6008C216A /* KitchenCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5F04A02F4198BC008C216A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA5F04A22F4198BC008C216A /* KitchenCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenCalcApp.swift; sourceTree = "<group>"; };
@@ -38,17 +40,19 @@
 		FAA127AA2F72D9DC0099CAFB /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		FAA127AB2F72D9DC0099CAFB /* Measure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
 		FAA127AC2F72D9DC0099CAFB /* SolveResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolveResult.swift; sourceTree = "<group>"; };
-		FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		FAA127AF2F72D9DC0099CAFB /* CalcResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcResultVM.swift; sourceTree = "<group>"; };
 		FAA127B12F72D9DC0099CAFB /* CalcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcView.swift; sourceTree = "<group>"; };
 		FAA127B22F72D9DC0099CAFB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FAA127B42F72D9DC0099CAFB /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSheetView.swift; sourceTree = "<group>"; };
+		FAAB5CB82F75C1B400FDB325 /* IngredientSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientSheetView.swift; sourceTree = "<group>"; };
 		FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientView.swift; sourceTree = "<group>"; };
 		FAAB5CBC2F77944F00FDB325 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FAAB5D5D2F798A5100FDB325 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
-		FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasureListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMeasureListView.swift; sourceTree = "<group>"; };
+		FAAB5D5F2F7B0F9C00FDB325 /* MeasureListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureListView.swift; sourceTree = "<group>"; };
 		FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeasureView.swift; sourceTree = "<group>"; };
+		FAE0AEAB2F880BEC00235B83 /* IngredientsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsVM.swift; sourceTree = "<group>"; };
+		FAE0AEAD2F880ECD00235B83 /* MeasuresVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuresVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,21 +66,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA4BBE4E2F84D07200BB53E9 /* Products */ = {
+		FA4BBE4E2F84D07200BB53E9 /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
-				FA4BBE4A2F840E9500BB53E9 /* ProductList.swift */,
-				FAAB5CB82F75C1B400FDB325 /* ProductSheetView.swift */,
-				FA4BBE4C2F84409500BB53E9 /* SettingsProductView.swift */,
+				FA4BBE4A2F840E9500BB53E9 /* IngredientList.swift */,
+				FAAB5CB82F75C1B400FDB325 /* IngredientSheetView.swift */,
+				FA4BBE4C2F84409500BB53E9 /* SettingsIngredientView.swift */,
 				FAAB5CBA2F76A0C100FDB325 /* AddIngredientView.swift */,
 			);
-			path = Products;
+			path = Ingredients;
 			sourceTree = "<group>";
 		};
 		FA4BBE4F2F84D09300BB53E9 /* Measures */ = {
 			isa = PBXGroup;
 			children = (
-				FAAB5D5F2F7B0F9C00FDB325 /* CustomMeasureListView.swift */,
+				FAAB5D5F2F7B0F9C00FDB325 /* MeasureListView.swift */,
 				FAAB5D612F7BB36B00FDB325 /* AddMeasureView.swift */,
 			);
 			path = Measures;
@@ -143,7 +147,9 @@
 		FAA127B02F72D9DC0099CAFB /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				FAA127AF2F72D9DC0099CAFB /* ViewModel.swift */,
+				FAA127AF2F72D9DC0099CAFB /* CalcResultVM.swift */,
+				FAE0AEAB2F880BEC00235B83 /* IngredientsVM.swift */,
+				FAE0AEAD2F880ECD00235B83 /* MeasuresVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -154,7 +160,7 @@
 				FAAB5CB62F74FB2100FDB325 /* SettingsView.swift */,
 				FAA127B22F72D9DC0099CAFB /* ContentView.swift */,
 				FA4BBE4F2F84D09300BB53E9 /* Measures */,
-				FA4BBE4E2F84D07200BB53E9 /* Products */,
+				FA4BBE4E2F84D07200BB53E9 /* Ingredients */,
 				FA4BBE502F84D0CE00BB53E9 /* ConverterPage */,
 			);
 			path = Views;
@@ -237,20 +243,22 @@
 				FAA127A92F726C2F0099CAFB /* Theme.swift in Sources */,
 				FAA127B72F72D9DC0099CAFB /* CalcView.swift in Sources */,
 				FAA127B82F72D9DC0099CAFB /* Measure.swift in Sources */,
+				FAE0AEAC2F880BEC00235B83 /* IngredientsVM.swift in Sources */,
 				FAAB5D622F7BB36B00FDB325 /* AddMeasureView.swift in Sources */,
 				FAA127B92F72D9DC0099CAFB /* SolveResult.swift in Sources */,
-				FAA127BA2F72D9DC0099CAFB /* ViewModel.swift in Sources */,
-				FAAB5CB92F75C1B400FDB325 /* ProductSheetView.swift in Sources */,
+				FAA127BA2F72D9DC0099CAFB /* CalcResultVM.swift in Sources */,
+				FAAB5CB92F75C1B400FDB325 /* IngredientSheetView.swift in Sources */,
 				FAA127BB2F72D9DC0099CAFB /* ResultCell.swift in Sources */,
 				FAA127BC2F72D9DC0099CAFB /* ContentView.swift in Sources */,
-				FA4BBE4B2F840E9500BB53E9 /* ProductList.swift in Sources */,
-				FAAB5D602F7B0F9C00FDB325 /* CustomMeasureListView.swift in Sources */,
+				FA4BBE4B2F840E9500BB53E9 /* IngredientList.swift in Sources */,
+				FAAB5D602F7B0F9C00FDB325 /* MeasureListView.swift in Sources */,
 				FAAB5CB72F74FB2100FDB325 /* SettingsView.swift in Sources */,
 				FAA127BE2F72D9DC0099CAFB /* Ingredient.swift in Sources */,
 				FA5F04A62F4198BC008C216A /* KitchenCalcApp.swift in Sources */,
 				FAAB5D5E2F798A5100FDB325 /* Badge.swift in Sources */,
 				FAAB5CBB2F76A0C100FDB325 /* AddIngredientView.swift in Sources */,
-				FA4BBE4D2F84409500BB53E9 /* SettingsProductView.swift in Sources */,
+				FA4BBE4D2F84409500BB53E9 /* SettingsIngredientView.swift in Sources */,
+				FAE0AEAE2F880ECD00235B83 /* MeasuresVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

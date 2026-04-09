@@ -13,7 +13,7 @@ struct AddIngredientView: View {
     @State private var title: String = ""
     @State private var density: Double?
     @State private var showDuplicateError = false
-    @Environment(CalcViewModel.self) private var viewModel
+    @Environment(IngredientsVM.self) private var ingredientsVM
     @Environment(\.dismiss) private var dismiss
     
     var confidenceBadge: Ingredient.DensityConfidence? {
@@ -37,7 +37,7 @@ struct AddIngredientView: View {
                     .font(.bodyRegular)
                     .foregroundStyle(Color.textSecondary)
                 
-                //MARK: Product title
+                //MARK: Ingredient title
                 VStack(alignment: .leading) {
                     Text("Name")
                     TextField("e.g. Almond flour", text: $title)
@@ -46,14 +46,16 @@ struct AddIngredientView: View {
                 
                 // MARK: Density
                 VStack(alignment: .leading) {
-                    Text("Density ") + Text("(g/mL)").foregroundStyle(Color.textSecondary)
+                    Text("Density ") + Text("(g/mL)")
+                        .font(.bodyRegular)
+                        .foregroundStyle(Color.textSecondary)
                     
                     HStack{
-                        //MARK: Product Density
+                        //MARK: Ingredient Density
                         TextField("e.g. 0.45", value: $density, format: .number.grouping(.never))
                             .keyboardType(.decimalPad)
                         
-                        //MARK: Product Badge
+                        //MARK: Ingredient Badge
                         if let confBadge = confidenceBadge {
                             confBadge.badge
                         }
@@ -94,7 +96,7 @@ struct AddIngredientView: View {
                     
                     if title.isEmpty || (density ?? 0) <= 0 {
                         Text("Fill in all fields to save")
-                            .font(.caption)
+                            .font(.bodyRegular)
                             .foregroundStyle(Color.textSecondary)
                             .frame(maxWidth: .infinity, alignment: .leading) 
                     }
@@ -102,11 +104,11 @@ struct AddIngredientView: View {
                     Button("Save") {
                         showDuplicateError = false
                         
-                        guard !viewModel.isIngredientDuplicate(title: title, excludingID: isNew ? nil : viewModel.selectedIngredient?.id ) else {
+                        guard !ingredientsVM.isIngredientDuplicate(title: title, excludingID: isNew ? nil : ingredientsVM.selectedIngredient?.id ) else {
                             showDuplicateError = true
                             return }
                         
-                        isNew ? viewModel.saveIngredient(title: title, density: density ?? 0) : viewModel.updateIngredient(title: title, density: density)
+                        isNew ? ingredientsVM.saveIngredient(title: title, density: density ?? 0) : ingredientsVM.updateIngredient(title: title, density: density)
                         dismiss()
                     }
                     .modifier(ButtonMod(color: .blue,
@@ -125,7 +127,7 @@ struct AddIngredientView: View {
             .hideKeyboardOnTap()
             .onAppear{
                 if !isNew {
-                    if let ingredient = viewModel.selectedIngredient {
+                    if let ingredient = ingredientsVM.selectedIngredient {
                         self.title = ingredient.title
                         self.density = ingredient.density
                     }
@@ -139,7 +141,7 @@ struct AddIngredientView: View {
 //#Preview {
 //    let config = ModelConfiguration(isStoredInMemoryOnly: true)
 //    let container = try! ModelContainer(for: Measure.self, Ingredient.self, configurations: config)
-//    let vm = CalcViewModel()
+//    let vm = CalcResultVM()
 //    NavigationStack {
 //        AddIngredientView(isNew: true)
 //    }

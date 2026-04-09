@@ -9,22 +9,16 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @Environment(CalcViewModel.self) private var viewModel
+    @Environment(MeasuresVM.self) private var measuresVM
     
     var body: some View {
-        @Bindable var viewModel = viewModel
+        @Bindable var measuresVM = measuresVM
         NavigationStack {
             Form {
                 
                 Section {
-                    Toggle("Imperial units", isOn: $viewModel.showImperial)
-                } footer: {
-                    Text("Show ounces, pounds, fluid ounces, and pints in the unit picker")
-                }
-                
-                Section {
                     NavigationLink("List of your ingredients") {
-                        SettingsProductView()
+                        SettingsIngredientView()
                     }
                 } footer: {
                     Text("Customize your Ingredient list. Add / Edit / Delete ingredients with density values")
@@ -32,10 +26,16 @@ struct SettingsView: View {
                 
                 Section {
                     NavigationLink("List of your measures") {
-                        CustomMeasureListView()
+                        MeasureListView()
                     }
                 } footer: {
-                    Text("Customize your list of Measures. Add / Edit / Delete units of measurement to convert ingredients them accurately")
+                    Text("Customize your list of Measures. Add / Edit / Delete units of measurement to convert ingredients accurately")
+                }
+                
+                Section {
+                    Toggle("Imperial units", isOn: $measuresVM.showImperial)
+                } footer: {
+                    Text("Show ounces, pounds, fluid ounces, and pints in the unit picker")
                 }
             }
             .navigationTitle("Settings")

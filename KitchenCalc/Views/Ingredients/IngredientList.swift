@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct ProductList: View {
-    @Environment(CalcViewModel.self) private var viewModel
+struct IngredientList: View {
+    @Environment(IngredientsVM.self) private var ingredientsVM
     @State var ingredients: [Ingredient]
     var action: () -> ()
     
     var body: some View {
         
-        List(viewModel.ingredients) { ingredient in
+        List(ingredientsVM.ingredients) { ingredient in
             Button {
-                viewModel.selectedIngredient = ingredient
+                ingredientsVM.selectedIngredient = ingredient
                 action()
             } label: {
                 HStack {
@@ -29,7 +29,7 @@ struct ProductList: View {
             }
             .swipeActions {
                 Button("Delete") {
-                    viewModel.deleteIngredient(ingredient)
+                    ingredientsVM.deleteIngredient(ingredient)
                 }
                 .tint(.red)
             }

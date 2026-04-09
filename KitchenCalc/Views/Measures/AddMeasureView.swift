@@ -18,7 +18,7 @@ struct AddMeasureView: View {
     @State private var showDuplicateError = false
     @State private var isImperial: Bool = false
     
-    @Environment(CalcViewModel.self) private var viewModel
+    @Environment(MeasuresVM.self) private var measuresVM
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -42,11 +42,11 @@ struct AddMeasureView: View {
                     Text("Abbreviation ") + Text("(5 chars max)").foregroundStyle(Color.textSecondary)
                     TextField("cup", text: $shortTitle)
                         .onChange(of: shortTitle) {
-                            shortTitle = viewModel.trimShortTitle(text: shortTitle)
+                            shortTitle = measuresVM.trimShortTitle(text: shortTitle)
                         }
                         .modifier(TextFieldMod(isInvalid: showDuplicateError))
-                    Text("Shown in the unit picker")
-                        .font(.caption)
+                    Text("Shown in the history section")
+                        .font(.bodyRegular)
                         .foregroundStyle(Color.textTertiary)
                 }
                 
@@ -82,29 +82,29 @@ struct AddMeasureView: View {
                     
                     if title.isEmpty || shortTitle.isEmpty || (inputKoefficient ?? 0) <= 0 {
                         Text("Fill in all fields to save")
-                            .font(.caption)
+                            .font(.bodyRegular)
                             .foregroundStyle(Color.textSecondary)
-                            .frame(maxWidth: .infinity, alignment: .leading) 
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     
                     Button("Save") {
                         showDuplicateError = false
                         
-                        guard !viewModel.isMeasureDuplicate(title: title, shortTitle: shortTitle, excludingID: isNew ? nil : measure?.id  )
+                        guard !measuresVM.isMeasureDuplicate(title: title, shortTitle: shortTitle, excludingID: isNew ? nil : measure?.id  )
                         else {
                             showDuplicateError = true
                             return
                         }
                         
                         //MARK: if measure is Imperial, need to recalculate it
-                        let calculatedKoefficient = viewModel.convertToKoefficient(input: inputKoefficient ?? 0, isWeight: isWeight, isImperial: isImperial)
+                        let calculatedKoefficient = measuresVM.convertToKoefficient(input: inputKoefficient ?? 0, isWeight: isWeight, isImperial: isImperial)
                         
                         //MARK: Reuse of same button to save new or update existing measure
                         if isNew {
-                            viewModel.saveMeasure(title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isWeight: isWeight, isImperial: isImperial)
+                            measuresVM.saveMeasure(title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isWeight: isWeight, isImperial: isImperial)
                             dismiss()
                         } else {
-                            viewModel.updateMeasure(measure!, title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isImperial: isImperial, isWeight: isWeight)
+                            measuresVM.updateMeasure(measure!, title: title, shortTitle: shortTitle, koefficient: calculatedKoefficient, isImperial: isImperial, isWeight: isWeight)
                             dismiss()
                         }
                     }

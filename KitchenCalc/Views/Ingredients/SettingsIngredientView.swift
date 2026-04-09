@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct SettingsProductView: View {
-    @Environment(CalcViewModel.self) var viewModel
+struct SettingsIngredientView: View {
+    @Environment(IngredientsVM.self) var ingredientsVM
     @State private var showIngredientEditView = false
     
     var body: some View {
-        ProductList(ingredients: viewModel.ingredients) {
-            if viewModel.selectedIngredient != nil {
+        IngredientList(ingredients: ingredientsVM.ingredients) {
+            if ingredientsVM.selectedIngredient != nil {
                 showIngredientEditView = true
             }
         }
-        .navigationTitle("All products")
+        .navigationTitle("All Ingredients")
         .navigationDestination(isPresented: $showIngredientEditView) {
             AddIngredientView(isNew: false)
         }
@@ -32,6 +32,6 @@ struct SettingsProductView: View {
 }
 
 //#Preview {
-//    SettingsProductView()
-//        .environment(CalcViewModel())
+//    SettingsIngredientView()
+//        .environment(CalcResultVM())
 //}

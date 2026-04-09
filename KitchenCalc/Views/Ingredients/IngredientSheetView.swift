@@ -8,17 +8,17 @@
 import SwiftUI
 import SwiftData
 
-struct ProductSheetView: View {
+struct IngredientSheetView: View {
     @State private var showAddIngredientSheet = false
-    @Environment(CalcViewModel.self) private var viewModel
+    @Environment(IngredientsVM.self) private var ingredientsVM
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack {
-            ProductList(ingredients: viewModel.ingredients) {
+            IngredientList(ingredients: ingredientsVM.ingredients) {
                 dismiss()
             }
-            .navigationTitle("Select product")
+            .navigationTitle("Select Ingredient")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink("Add") {

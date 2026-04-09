@@ -10,10 +10,17 @@ import SwiftData
 
 @main
 struct KitchenCalcApp: App {
+    
+    @State private var calcResultVM = CalcResultVM()
+    @State private var ingredientsVM = IngredientsVM()
+    @State private var measuresVM = MeasuresVM()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(calcResultVM)
+                .environment(ingredientsVM)
+                .environment(measuresVM)
         }
         .modelContainer(for: [Ingredient.self, SolveResult.self, Measure.self]) { result in
             guard let container = try? result.get() else { return }

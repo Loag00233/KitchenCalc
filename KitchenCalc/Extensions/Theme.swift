@@ -9,9 +9,9 @@ import SwiftUI
 
 extension Color {
     
-    static let textPrimary = Color.black.opacity(0.82)
-    static let textSecondary = Color.black.opacity(0.42)
-    static let textTertiary = Color.black.opacity(0.28)
+    static let textPrimary = Color.primary.opacity(0.82)
+    static let textSecondary = Color.primary.opacity(0.42)
+    static let textTertiary = Color.primary.opacity(0.28)
     
     static let accent = Color.accentColor
     

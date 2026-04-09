@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct CalcView: View {
-    @Environment(CalcViewModel.self) private var viewModel
-    @State private var showProductSheet = false
+    
+    @Environment(CalcResultVM.self) private var calcResultVM
+    @Environment(IngredientsVM.self) private var ingredientsVM
+    @Environment(MeasuresVM.self) private var measuresVM
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @State private var showIngredientSheet = false
     
     var body: some View {
         NavigationStack {
@@ -30,38 +33,39 @@ struct CalcView: View {
             .navigationTitle("Converter")
             .background { Color.appBackground.ignoresSafeArea() }
             .hideKeyboardOnTap()
-            .onChange(of: viewModel.inValue) { viewModel.solve() }
-            .onChange(of: viewModel.inMeasure) { viewModel.solve() }
-            .onChange(of: viewModel.outMeasure) { viewModel.solve() }
-            .onChange(of: viewModel.selectedIngredient) { viewModel.solve() }
+            .onChange(of: calcResultVM.inValue) { calcResultVM.solve(inValue: calcResultVM.inValue, inMeasure: measuresVM.inMeasure, outMeasure: measuresVM.outMeasure, ingredient: ingredientsVM.selectedIngredient) }
+            .onChange(of: measuresVM.inMeasure) { calcResultVM.solve(inValue: calcResultVM.inValue, inMeasure: measuresVM.inMeasure, outMeasure: measuresVM.outMeasure, ingredient: ingredientsVM.selectedIngredient) }
+            .onChange(of: measuresVM.outMeasure) { calcResultVM.solve(inValue: calcResultVM.inValue, inMeasure: measuresVM.inMeasure, outMeasure: measuresVM.outMeasure, ingredient: ingredientsVM.selectedIngredient) }
+            .onChange(of: ingredientsVM.selectedIngredient) { calcResultVM.solve(inValue: calcResultVM.inValue, inMeasure: measuresVM.inMeasure, outMeasure: measuresVM.outMeasure, ingredient: ingredientsVM.selectedIngredient) }
         }
     }
     
     @ViewBuilder private func controlsBlock() -> some View {
-        @Bindable var viewModel = viewModel
+        @Bindable var calcResultVM = calcResultVM
+        @Bindable var measuresVM = measuresVM
         
         VStack(spacing: Spacing.large) {
             
             Button {
-                showProductSheet = true
+                showIngredientSheet = true
             } label: {
                 HStack(spacing: Spacing.extraSmall) {
                     Group {
-                        if let ingredient = viewModel.selectedIngredient {
+                        if let ingredient = ingredientsVM.selectedIngredient {
                             Text(ingredient.title)
                         } else {
-                            Text("Select product")
+                            Text("Select Ingredient")
                         }
                     }
                     .font(.viewTitle)
                     .foregroundStyle(Color.textPrimary)
-                    if let density = viewModel.selectedIngredient?.density {
+                    if let density = ingredientsVM.selectedIngredient?.density {
                         Text("\(Double(density).formatted(.number.precision(.fractionLength(0...2)) )) g/ml")
                             .font(.bodyRegular)
                             .foregroundStyle(Color.textSecondary)
                     }
                     Spacer()
-                    viewModel.selectedIngredient?.confidence.badge
+                    ingredientsVM.selectedIngredient?.confidence.badge
                     Image(systemName: "chevron.right")
                         .foregroundStyle(Color.textTertiary)
                 }
@@ -76,8 +80,8 @@ struct CalcView: View {
             }
             .padding(.horizontal, Spacing.medium)
             
-            .sheet(isPresented: $showProductSheet) {
-                ProductSheetView()
+            .sheet(isPresented: $showIngredientSheet) {
+                IngredientSheetView()
             }
             
             
@@ -85,12 +89,12 @@ struct CalcView: View {
                 
                 // MARK: Входные значения
                 HStack {
-                    TextField("Value", value: $viewModel.inValue, format: .number.grouping(.never))
+                    TextField("Value", value: $calcResultVM.inValue, format: .number.grouping(.never))
                         .font(.converterValue)
                         .foregroundStyle(Color.accent)
                         .keyboardType(.decimalPad)
                     Spacer()
-                    unitPicker(selection: $viewModel.inMeasure)
+                    unitPicker(selection: $measuresVM.inMeasure)
                 }
                 .padding(.horizontal, Spacing.large)
                 .padding(.vertical, Spacing.medium)
@@ -100,7 +104,7 @@ struct CalcView: View {
                         .fill(Color.secondary.opacity(0.25))
                         .frame(height: 1)
                     Button {
-                        viewModel.swapMeasures()
+                        measuresVM.swapMeasures()
                     } label: {
                         Image(systemName: "arrow.up.arrow.down")
                             .font(.system(size: 22, weight: .medium))
@@ -114,24 +118,24 @@ struct CalcView: View {
                 // MARK: Рассчетные значения
                 HStack {
                     
-                    Text((viewModel.outValue ?? 0)
+                    Text((calcResultVM.outValue ?? 0)
                         .formatted(.number.precision(.fractionLength(0...2)).grouping(.never) ))
                     .font(.converterValue)
                     Spacer()
-                    unitPicker(selection: $viewModel.outMeasure)
+                    unitPicker(selection: $measuresVM.outMeasure)
                 }
                 .padding(.horizontal, Spacing.large)
                 .padding(.vertical, Spacing.medium)
                 .frame(maxWidth: .infinity)
                 
-                if let hint = viewModel.selectedIngredient?.confidence.hint {
+                if let hint = ingredientsVM.selectedIngredient?.confidence.hint {
                     HStack(spacing: 6) {
                         Image(systemName: "info.circle")
                         Text(hint)
                             .font(.caption)
                     }
-                    .foregroundStyle(viewModel.selectedIngredient?.confidence.colorBadge ?? .orange)
-                    .background(Color.white.opacity(0.2), in: Capsule())
+                    .foregroundStyle(ingredientsVM.selectedIngredient?.confidence.colorBadge ?? .orange)
+                    .background(Color.primary.opacity(0.2), in: Capsule())
                     .padding(.horizontal, Spacing.large)
                     .padding(.bottom, Spacing.small)
                 }
@@ -142,12 +146,12 @@ struct CalcView: View {
             
             // MARK: Save Button
             Button {
-                viewModel.saveSolveResult()
+                calcResultVM.saveSolveResult(inValue: calcResultVM.inValue, inMeasure: measuresVM.inMeasure, outMeasure: measuresVM.outMeasure, ingredient: ingredientsVM.selectedIngredient)
             } label: {
                 Text("Save result")
-                    .modifier(ButtonMod(color: .accent, isEnabled: viewModel.canSaveResult))
+                    .modifier(ButtonMod(color: .accent, isEnabled: calcResultVM.canSaveResult(ingredient: ingredientsVM.selectedIngredient)))
             }
-            .disabled(!viewModel.canSaveResult)
+            .disabled(!calcResultVM.canSaveResult(ingredient: ingredientsVM.selectedIngredient) )
             .padding(.horizontal, Spacing.medium)
         }
         .padding(.bottom, Spacing.large)
@@ -155,18 +159,18 @@ struct CalcView: View {
     
     @ViewBuilder private func historyBlock() -> some View {
         
-        if viewModel.solveResults.isEmpty {
+        if calcResultVM.solveResults.isEmpty {
             ContentUnavailableView(
                 "No results yet",
                 systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
                 description: Text("Save a calculation to see it here")
             )
         } else {
-            List(viewModel.solveResults) { result in
+            List(calcResultVM.solveResults) { result in
                 ResultCell(result: result)
                     .swipeActions {
                         Button("Delete", role: .destructive) {
-                            viewModel.deleteSolveResult(result)
+                            calcResultVM.deleteSolveResult(result)
                         }
                     }
                     .contextMenu {
@@ -189,7 +193,7 @@ struct CalcView: View {
     
     private func unitPicker(selection: Binding<Measure>) -> some View {
         Picker("", selection: selection) {
-            ForEach(viewModel.filteredMeasures) { measure in
+            ForEach(measuresVM.filteredMeasures) { measure in
                 Text(measure.displayTitle).tag(measure)
             }
         }

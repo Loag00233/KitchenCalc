@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var viewModel = CalcViewModel()
+    @Environment(CalcResultVM.self) private var calcResultVM
+    @Environment(IngredientsVM.self) private var ingredientsVM
+    @Environment(MeasuresVM.self) private var measuresVM
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
@@ -26,8 +28,11 @@ struct ContentView: View {
                     Text("Settings")
                 }
         }
-        .environment(viewModel)
-        .onAppear { viewModel.setup(modelContext) }
+        .onAppear {
+            calcResultVM.setup(modelContext)
+            ingredientsVM.setup(modelContext)
+            measuresVM.setup(modelContext)
+        }
     }
 }
 
